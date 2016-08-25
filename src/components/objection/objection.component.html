@@ -1,7 +1,7 @@
 <div>
       <a id="{{objection.id}}"></a>
       <h3><a target="_top" href="http://www.bernierebuttals.org?objection={{objection.id}}">🔗</a> 
-      <span class ="objection-name" (click)="toggleRebuttals.emit({objection: objection})">{{objection.name}}</span></h3>
+      <span class ="objection-name" (click)="toggleRebuttals.emit({objection: objection})">{{objection.get('name')}}</span></h3>
       <span class="objection-block" *ngIf="objection.expanded">
         <div [hidden]="!objection.imageLink" class="objection-graphic">
              <a target="_blank" href="{{objection.imageLink}}">
