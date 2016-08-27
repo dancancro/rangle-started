@@ -6,8 +6,8 @@ import { RioLogo } from './logo';
 import { RioLoginModal, RioLoginForm } from './login';
 import { RioNavigator, RioNavigatorItem } from './navigator';
 import { RioModal, RioModalContent } from './modal';
-import { ObjectionComponent } from './objection';
-import { RebuttalComponent } from './rebuttal';
+import { ObjectionComponent } from './list/objection';
+import { RebuttalComponent } from './list/rebuttal';
 
 import {
   RioForm,

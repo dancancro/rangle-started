@@ -1,31 +1,28 @@
-import { Component, Input, Output, 
+import { Component, Input, Output, OnInit,
          EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 // import { SortablejsOptions, SORTABLEJS_DIRECTIVES } from 'angular-sortablejs';
 import { SortablejsOptions} from 'angular-sortablejs';
 
-import { IList, IObjection, IRebuttal } from '../../store/list/list.types';
+import { IListRecord, IList, IObjectionRecord, IObjection, IRebuttal } from '../../../store/list/list.types';
 import { RebuttalComponent } from '../rebuttal/rebuttal.component';
-// import { ListActions } from '../../actions/list.actions';
 
 @Component({
     moduleId: module.id,
     selector: 'list-objection',
     template: require('./objection.component.html'),
     styles: [require('./objection.component.css')],
-   // providers: [ListActions],
- //   directives: [RebuttalComponent],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ObjectionComponent {
+export class ObjectionComponent implements OnInit {
     @Input() list: IList;
     @Input() objection: IObjection;
-    @Input() editable = false;
+
     @Output() toggleRebuttals = new EventEmitter();
     @Output() reorderObjections = new EventEmitter();
     @Output() cancelRebuttal = new EventEmitter();
     @Output() saveRebuttal = new EventEmitter();
-    @Output() editRebuttal = new EventEmitter();
+    @Output() makeRebuttalEditable = new EventEmitter();
     @Output() addRebuttal = new EventEmitter();
 
     options: SortablejsOptions = {
@@ -38,6 +35,12 @@ export class ObjectionComponent {
         animation: 0
     };
 
+  ngOnInit() {  
+    console.log('list properties: ' + Object.keys(this.list));
+    console.log('objection properties: ' + Object.keys(this.objection));
+    //  console.log('this.list.expanded: ' + this.list.expanded);
+    //  console.log('this.objection.expanded: ' + this.objection.expanded);
+  }
 
     sortOn(...args: any[]) {
 

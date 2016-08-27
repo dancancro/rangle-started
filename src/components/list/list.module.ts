@@ -3,8 +3,8 @@ import {NgModule}      from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { ListPage } from '../../pages/list.page';
-import { ObjectionComponent } from '../objection/objection.component';
-import { RebuttalComponent } from '../rebuttal/rebuttal.component';
+import { ObjectionComponent } from './objection/objection.component';
+import { RebuttalComponent } from './rebuttal/rebuttal.component';
 import { SORTABLEJS_DIRECTIVES } from 'angular-sortablejs';
 
 import { AsyncPipe } from '@angular/common';

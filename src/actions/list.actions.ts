@@ -1,8 +1,9 @@
 // Actions
 import { Injectable } from '@angular/core';
-import { NgRedux } from 'ng2-redux';
-import { IAppState } from '../store';
 
+import { NgRedux } from 'ng2-redux';
+
+import { IAppState } from '../store';
 import { IObjection } from '../store';
 
 @Injectable()
@@ -27,12 +28,12 @@ export class ListActions {
 
   constructor(private ngRedux: NgRedux<IAppState>) { }
 
-// List
+// List Actions
 
   fetchObjections(objections): void {
     this.ngRedux.dispatch({
       type: ListActions.OBJECTIONS_FETCHED_OK,
-      payload: objections
+      payload: {objections: objections}
     });
   }
 
@@ -66,7 +67,7 @@ export class ListActions {
     });
   }
 
-// Objection
+// Objection Actions
 
   addRebuttal() {
     this.ngRedux.dispatch({
@@ -77,7 +78,7 @@ export class ListActions {
   starObjection({objection}) {
     this.ngRedux.dispatch({
       type: ListActions.EDITABLE_TOGGLED,
-      id: objection.id
+      payload: { objectionId: objection.id }
     });
   }
 
@@ -92,7 +93,7 @@ export class ListActions {
   reorderRebuttals({objection}) {
     this.ngRedux.dispatch({
       type: ListActions.REBUTTALS_REORDERED,
-      id: objection.id
+      payload: { objectionId: objection.id }
     });
   }
 
@@ -100,7 +101,7 @@ export class ListActions {
     this.ngRedux.dispatch(
       { 
        type: ListActions.OBJECTION_EXPANDED,
-       id: objection.id
+       payload: { objectionId: objection.id }
       });
   }
 
@@ -108,23 +109,23 @@ export class ListActions {
     this.ngRedux.dispatch(
       { 
        type: ListActions.OBJECTION_COLLAPSED,
-       id: objection.id
+       payload: { objectionId: objection.id }
       });
   }
 
-  // Rebuttal
+  // Rebuttal Actions
   
   cancelRebuttal({rebuttal, objection}) {
     this.ngRedux.dispatch({ 
       type: ListActions.REBUTTAL_CANCELED,
-      id: rebuttal.id 
+       payload: { rebuttalId: rebuttal.id }
     });
   }
 
   saveRebuttal({rebuttal, objection}) {
     this.ngRedux.dispatch({ 
       type: ListActions.REBUTTAL_SAVED,
-      id: rebuttal.id 
+       payload: { rebuttalId: rebuttal.id }
     });
 
   }
@@ -132,8 +133,8 @@ export class ListActions {
   makeRebuttalEditable({rebuttal, objection}) {
     this.ngRedux.dispatch({ 
       type: ListActions.REBUTTAL_MADE_EDITABLE, 
-      rebuttalId: rebuttal.id,
-      objectionId: objection.id
+      payload: { rebuttalId: rebuttal.id,
+                 objectionId: objection.id }
     });
   }
 

@@ -1,24 +1,35 @@
 // import Immutable = require('immutable');
-import { List, Map } from 'immutable';
+import { List } from 'immutable';
+import { Map } from 'immutable';
+import { Record } from 'immutable';
+
 import { IPayloadAction } from '../../actions';
 import { ListActions } from '../../actions/list.actions';
-import { IObjection, IObjectionRecord, IList, IListRecord } from './list.types';
-import { INITIAL_STATE } from './list.initial-state';
+import { IList } from './list.types';
+import { IListRecord } from './list.types';
+import { INITIAL_LIST_STATE } from './list.initial-state';
+import { IObjection } from './list.types';
+import { IObjectionRecord } from './list.types';
+import { IRebuttal } from './list.types';
+import { ListFactory } from './list.initial-state';
+import { ObjectionFactory } from './list.initial-state';
+import { RebuttalFactory } from './list.initial-state';
 
-export function listReducer(state: IListRecord = INITIAL_STATE,
+export function listReducer(state: IListRecord = INITIAL_LIST_STATE,
   action: IPayloadAction): IListRecord {
   switch (action.type) {
 
     // List actions
 
     case ListActions.OBJECTIONS_FETCHED_OK:
-      return (<IListRecord>state).merge(
+      let x = INITIAL_LIST_STATE.merge(
           {
-            objections: List([...action.payload]
-                              .map(objection => Map(objection))),
-            editable: false,
-          }
-      );
+            // Make an IObjection out of every POJO objection. Then replace each one's array of POJO rebuttals with a List of IRebuttals'
+            objections: List([...action.payload.objections]
+                              .map(objection => ObjectionFactory(objection).update('rebuttals', (rebuttals) => List(rebuttals.map((rebuttal) => RebuttalFactory(rebuttal))))))
+          });
+      return x;
+
 
     case ListActions.OBJECTION_ADDED:
 
@@ -31,6 +42,9 @@ export function listReducer(state: IListRecord = INITIAL_STATE,
       return expandAll(state, action, false);
 
     case ListActions.EDITABLE_TOGGLED:
+      return updateListField(state, action, 'editable', !state.get('editable'));
+      // this.editable = !this.editable;
+      // this.options.disabled = !this.options.disabled;   // draggabilitty
 
     // Objection actions
 
@@ -76,38 +90,37 @@ export function listReducer(state: IListRecord = INITIAL_STATE,
     //   this.edit.emit(null);
     // }
     case ListActions.REBUTTAL_MADE_EDITABLE:
-      return updateRebuttalField(state, action.payload.objectionId, 
-        action.payload.rebuttalId, 'editable', true);
+      return updateRebuttalField(state, action.payload.rebuttalId, 
+        action.payload.objectionId, 'editing', true);
       
-    case ListActions.EDITABLE_TOGGLED:
-      return updateListField(state, action, 'editable', state.get('editable'));
-      // this.editable = !this.editable;
-      // this.options.disabled = !this.options.disabled;   // draggabilitty
     default:
       return state;
   }
 }
 
-function findIndexById(objections: List<IObjection>, action): number {
-  return objections.findIndex((objection) => objection.id === action.id);
+function findObjectionIndex(objections: List<IObjection>, id): number {
+  return objections.findIndex((objection) => objection.id === id);
+}
+
+function findRebuttalIndex(rebuttals: List<IRebuttal>, id): number {
+  return rebuttals.findIndex((rebuttal) => rebuttal.id === id);
 }
 
 function updateOneObjection(state: IListRecord, action: IPayloadAction, fieldName: string, value: any): IListRecord {
-  let index = findIndexById((<IListRecord>state).get('objections'), action);
+  let index = findObjectionIndex((<IListRecord>state).get('objections'), action.payload.objectionId);
   return (<IListRecord>state).update('objections', 
           (objections: List<IObjectionRecord>) =>
              objections.update(
-               index, (objection: IObjectionRecord) => {
-                 console.log('type: ' + typeof objection + ' content: ' + JSON.stringify(objection));
-                 return objection.update(fieldName, () => value);
-               })
+               index, (objection: IObjectionRecord) => 
+                 objection.update(fieldName, () => value)
+               )
         );
 }
 
 function updateAllObjections(state: IListRecord, action: IPayloadAction, fieldName: string, value: any): IListRecord {
   let _state = state;
   state.get('objections').forEach(objection => {
-      action = Object.assign({}, action, {id: objection.id});
+      action = Object.assign({}, action, {payload: {objectionId: objection.id}});
       _state = updateOneObjection(_state, action, fieldName, value);
     }
   );
@@ -123,13 +136,15 @@ function updateListField(state: IListRecord, action: IPayloadAction, fieldName: 
     return state.update(fieldName, () => value );
 }
 
-function updateRebuttalField(state: IListRecord, objectionId: number, rebuttalId: number, fieldName: string, value: any): IListRecord {
+function updateRebuttalField(state: IListRecord, rebuttalId: number, objectionId: number, fieldName: string, value: any): IListRecord {
+  let objectionIndex = findObjectionIndex((<IListRecord>state).get('objections'), objectionId);
+  let rebuttals = (<IListRecord>state).getIn(['objections', objectionIndex, 'rebuttals']);
+  let rebuttalIndex = findRebuttalIndex(rebuttals, rebuttalId);
     return state.updateIn([
-                            'list',
                             'objections',
-                            objectionId, 
+                            objectionIndex, 
                             'rebuttals', 
-                            rebuttalId, 
+                            rebuttalIndex, 
                             fieldName], 
                             () => value);
 }

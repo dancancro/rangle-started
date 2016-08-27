@@ -41,12 +41,11 @@
           (click)="listActions.addObjection()">
           Add Objection
    </button><br>
-<ul id="objection-list" [sortablejs]="objection$ | async" [sortablejsOptions]="options">
+<ul id="objection-list" [sortablejs]="objections$ | async" [sortablejsOptions]="options">
 <li *ngFor="let objection of objection$ | async">
    <list-objection 
    [list]="objection$"
-   [objection]="objection" 
-   [editable]="editable"
+   [objection]="objection"
 
    (addObjection)="listActions.addObjection()" 
    (reorderObjections)="listActions.reorderObjections()" 

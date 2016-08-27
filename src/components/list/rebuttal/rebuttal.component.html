@@ -1,18 +1,18 @@
-<span *ngIf="editable">
+<span *ngIf="list.editable">
   <span class="drag-handle">☰</span>
-  <button class="btn btn-default btn-xs" title="edit" *ngIf="!rebuttal.editable"  (click)="edit.emit({rebuttal: rebuttal, objection: objection})">✎</button>
-  <button class="btn btn-default btn-xs" title="save" *ngIf="rebuttal.editable"  (click)="save.emit({rebuttal: rebuttal, objection: objection})">💾</button>
-  <button class="btn btn-default btn-xs" title="cancel" *ngIf="rebuttal.editable" (click)="cancel.emit({rebuttal: rebuttal, objection: objection})">❌</button> 
+  <button class="btn btn-default btn-xs" title="edit" (click)="makeEditable.emit({rebuttal: rebuttal, objection: objection})">✎</button>
+  <button class="btn btn-default btn-xs" title="save" (click)="save.emit({rebuttal: rebuttal, objection: objection})">💾</button>
+  <button class="btn btn-default btn-xs" title="cancel" click)="cancel.emit({rebuttal: rebuttal, objection: objection})">❌</button> 
 </span>
 
-<span *ngIf="list.editable">
+<span *ngIf="rebuttal.editing">
   <input placeholder="Short Name" [(ngModel)]="rebuttal.shortName" type="text">
   <textarea placeholder="Long Name" [(ngModel)]="rebuttal.longName" class="form-control"></textarea>
   <input placeholder="Link" [(ngModel)]="rebuttal.link" type="url" class="form-control">
   <textarea placeholder="Comments" *ngIf="rebuttal.id>0" [(ngModel)]="rebuttal.comments" class="form-control"></textarea>
 </span>
 
- <span *ngIf="!rebuttal.editable">
+ <span *ngIf="!rebuttal.editing">
      <b>{{rebuttal.shortName}}</b>
      <span>{{rebuttal.longName}}</span>
      <a *ngIf="rebuttal.link" target="blank" [href]="rebuttal.link">🔗</a>

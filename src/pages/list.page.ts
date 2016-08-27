@@ -1,20 +1,24 @@
-import { Component, Inject, ApplicationRef, OnInit, ContentChildren, 
-         QueryList, ChangeDetectionStrategy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { AsyncPipe } from '@angular/common';
-
+import { ActivatedRoute } from '@angular/router';
+import { ApplicationRef } from '@angular/core';
+import { ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
+import { ContentChildren } from '@angular/core';
+import { Inject } from '@angular/core';
+import { OnInit } from '@angular/core';
+import { QueryList } from '@angular/core';
+import { Router } from '@angular/router';
 import { SortablejsOptions } from 'angular-sortablejs';
-// import { SortablejsOptions, SORTABLEJS_DIRECTIVES } from 'angular-sortablejs';
-import { NgRedux, select } from 'ng2-redux';
+
+import { NgRedux } from 'ng2-redux';
+import { select } from 'ng2-redux';
 import { Observable } from 'rxjs/Observable';
 
-import { ObjectionComponent } from '../components/objection/objection.component';
 import { DataService } from '../services/data.service';
-
+import { IObjection } from '../store';
+import { IList } from '../store/list/list.types';
+import { IListRecord } from '../store/list/list.types';
 import { ListActions } from '../actions';
-import { IList, IObjection } from '../store';
-import { IAppState } from '../store';
-import { ListModule } from '../components/list/list.module';
+import { ListFactory } from '../store/list/list.initial-state';
 
 @Component({
   moduleId: module.id,
@@ -22,17 +26,12 @@ import { ListModule } from '../components/list/list.module';
   template: require('./list.page.html'),
   styles: [require('./list.page.css')],
   changeDetection: ChangeDetectionStrategy.OnPush,
- // pipes: [AsyncPipe],
   providers: [DataService, ListActions]
 })
 export class ListPage implements OnInit {
   @select(['list', 'objections']) objection$: Observable<IObjection[]>;
-// @select(['list', 'editable']) editable: boolean;
-
-// this doesn't behave as expected'
-//  @select(['list', 'expanded']) expanded: boolean; 
   @select(['list']) list: IList;
-
+  
   private subscription: any;
   options: SortablejsOptions = {
     disabled: false
@@ -44,9 +43,15 @@ export class ListPage implements OnInit {
   }
 
   ngOnInit() {
+    // TODO: Maybe this should happen in a new ngModule
     this.subscription = this.dataService.getObjections().subscribe({
-        next: (objections) => this.listActions.fetchObjections(objections),
+        next: (objections) => {
+          this.listActions.fetchObjections(objections);
+          console.log('list properties: ' + Object.keys(this.list));
+          console.log('objection$ properties: ' + Object.keys(this.objection$));
+        },
         error: (err) => this.listActions.error(err)
       });
+
   }
 }

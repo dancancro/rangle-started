@@ -13,9 +13,9 @@ export class DataService {
     result: Object;
     combined: any;
     error: Object;
-   // getUrl: string = 'https://script.google.com/macros/s/AKfycbymzGKzgGkVo4k'
-   // + 'epy9zKIyDlxbnLbp-ivCvj8mVMClmWgr-V-g/exec?json=1';
-    getUrl: string = '/objections.json';  // faster. use for dev
+    // getUrl: string = 'https://script.google.com/macros/s/AKfycbymzGKzgGkVo4k'
+    // + 'epy9zKIyDlxbnLbp-ivCvj8mVMClmWgr-V-g/exec?json=1';
+     getUrl: string = '/objections.json';  // faster. use for dev
     postUrl: string = 'https://script.google.com/macros/s/AKfycbymzGKzgGkVo4ke'
     + 'py9zKIyDlxbnLbp-ivCvj8mVMClmWgr-V-g/exec';
 

@@ -1,4 +1,6 @@
-import { Map, Record, List } from 'immutable';
+import { List } from 'immutable';
+import { Map } from 'immutable';
+import { Record } from 'immutable';
 import { TypedRecord } from 'typed-immutable-record';
 
 /**********************************************************************************/
@@ -14,19 +16,15 @@ export interface IObjection {
   imgHref?: string;
   imgSrc?: string;
   star?: boolean;
-
-  // methods
-  // set: (prop: string, val: any) => IObjection;
-  // merge: (other: any) => IObjection;
-
+  
   // UI state
   reordered: boolean;
   expanded: boolean;
+
+  // methods
 };
 
-export interface IObjectionRecord extends TypedRecord<IObjectionRecord>, IObjection {
-
-}
+export interface IObjectionRecord extends TypedRecord<IObjectionRecord>, IObjection {};
 
 /**********************************************************************************/
 /*******************************  LISTS *******************************************/
@@ -38,23 +36,18 @@ export interface IObjectionRecord extends TypedRecord<IObjectionRecord>, IObject
 // must HAVE a list of IObjections'
 export interface IList {
   // data
-//  objections: List<IObjection>;
   objections: List<IObjection>;
 
-  // methods
-//  set: (key: string, val: any) => IList;
-//  merge: (other: any) => IList;
-
   // UI state
-  touched: boolean;
   editable: boolean; 
   expanded: boolean;
+
+  // methods
+  isTouched: Function;
 };
 
 
-export interface IListRecord extends TypedRecord<IListRecord>,
-  IList {
-};
+export interface IListRecord extends TypedRecord<IListRecord>, IList {};
 
 /**********************************************************************************/
 /*******************************  REBUTTALS ***************************************/
@@ -69,74 +62,11 @@ export interface IRebuttal {
   link?: string;
   comments?: string;
 
-  // methods
-  // set: (prop: string, val: any) => IRebuttal;
-  // merge: (other: any) => IRebuttal;
-
   // UI state
   touched: boolean;
   editing: boolean;
+
+  // methods
 }
 
-
-
-export interface IRebuttalRecord extends TypedRecord<IRebuttalRecord>,
-  IRebuttal {
-};
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-// I'm not sure about this
-export const ListRecord = Record({
-  objections: List(),
-//  touched: false,
-  editable: false, 
-  expanded: false,
-
-  isTouched(): boolean {
-    let _touched = false;
-    // TODO make this a for loop with early exits
-    this.objections.forEach(objection => {
-        objection.get('rebuttals').forEach(rebuttal => {
-          if ( rebuttal.touched ) {
-            _touched = true;
-          }
-        });
-    });
-    return _touched;
-  }
-});
-
-export const ObjectionRecord = Record({
-  id: '',
-  name: '',
-  imgLink: '',
-  rebuttals: List(),
-  expanded: false,
-  rebuttalsReordered: false
-});
-
-export const RebuttalRecord = Record({
-  // data
-  id: 0,
-  shortName: '',
-  longName: '',
-  link: '',
-  comments: '',
-  
-  // UI state
-  touched: false,
-  editing: false
-});
-
-*/
+export interface IRebuttalRecord extends TypedRecord<IRebuttalRecord>, IRebuttal {};
