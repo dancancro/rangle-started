@@ -22,14 +22,12 @@ export function listReducer(state: IListRecord = INITIAL_LIST_STATE,
     // List actions
 
     case ListActions.OBJECTIONS_FETCHED_OK:
-      let x = INITIAL_LIST_STATE.merge(
+      return INITIAL_LIST_STATE.merge(
           {
             // Make an IObjection out of every POJO objection. Then replace each one's array of POJO rebuttals with a List of IRebuttals'
             objections: List([...action.payload.objections]
                               .map(objection => ObjectionFactory(objection).update('rebuttals', (rebuttals) => List(rebuttals.map((rebuttal) => RebuttalFactory(rebuttal))))))
           });
-      return x;
-
 
     case ListActions.OBJECTION_ADDED:
 
@@ -66,32 +64,32 @@ export function listReducer(state: IListRecord = INITIAL_LIST_STATE,
     // Rebuttal actions
 
     case ListActions.REBUTTAL_CANCELED:
-      return state;
-  //   if ( this.rebuttal.id === 0 ) {
-  //     this.onCancel.emit(null);
-  //     return;
-  //   }
-  //     this.rebuttal.shortName = this.oldShortName;
-  //     this.rebuttal.longName = this.oldLongName;
-  //     this.rebuttal.link = this.oldLink;
-  //     this.rebuttal.comments = this.oldComments;
-  //     this.toggleEditing(); 
-  // }
+      return updateRebuttalField(state, action.payload.rebuttal.id, action.payload.objection.id, 'editing', false);
 
     case ListActions.REBUTTAL_SAVED:
-    // this.rebuttal.touched = 
-    //   this.rebuttal.shortName !== this.oldShortName ||
-    //   this.rebuttal.longName !== this.oldLongName ||
-    //   this.rebuttal.link !== this.oldLink ||
-    //   this.rebuttal.comments !== this.oldComments;
+      let objectionIndex = findObjectionIndex((<IListRecord>state).get('objections'), action.payload.objection.id);
+      let rebuttals = (<IListRecord>state).getIn(['objections', objectionIndex, 'rebuttals']);
+      let rebuttalIndex = findRebuttalIndex(rebuttals, action.payload.rebuttal.id);
+      let rebuttal = action.payload.rebuttal;
+      let newRebuttal = action.payload.newRebuttal;
+      let touched = 
+        newRebuttal.shortName.value !== rebuttal.shortName ||
+        newRebuttal.longName.value !== rebuttal.longName ||
+        newRebuttal.link.value !== rebuttal.link ||
+        newRebuttal.comments.value !== rebuttal.comments;
+      return state.updateIn(['objections', objectionIndex, 'rebuttals', rebuttalIndex], () => RebuttalFactory({
+        id: action.payload.rebuttal.id,
+        shortName: action.payload.newRebuttal.shortName.value, 
+        longName: action.payload.newRebuttal.longName.value,
+        link: action.payload.newRebuttal.link.value,
+        comments: action.payload.newRebuttal.comments.value,
+        touched: touched,
+        editing: false})
+      );
     
-    // this.toggleEditing(); 
-    // if (this.rebuttal.touched) {
-    //   this.edit.emit(null);
-    // }
     case ListActions.REBUTTAL_MADE_EDITABLE:
-      return updateRebuttalField(state, action.payload.rebuttalId, 
-        action.payload.objectionId, 'editing', true);
+      return updateRebuttalField(state, action.payload.rebuttal.id, 
+        action.payload.objection.id, 'editing', true);
       
     default:
       return state;
@@ -107,7 +105,7 @@ function findRebuttalIndex(rebuttals: List<IRebuttal>, id): number {
 }
 
 function updateOneObjection(state: IListRecord, action: IPayloadAction, fieldName: string, value: any): IListRecord {
-  let index = findObjectionIndex((<IListRecord>state).get('objections'), action.payload.objectionId);
+  let index = findObjectionIndex((<IListRecord>state).get('objections'), action.payload.objection.id);
   return (<IListRecord>state).update('objections', 
           (objections: List<IObjectionRecord>) =>
              objections.update(
@@ -120,7 +118,7 @@ function updateOneObjection(state: IListRecord, action: IPayloadAction, fieldNam
 function updateAllObjections(state: IListRecord, action: IPayloadAction, fieldName: string, value: any): IListRecord {
   let _state = state;
   state.get('objections').forEach(objection => {
-      action = Object.assign({}, action, {payload: {objectionId: objection.id}});
+      action = Object.assign({}, action, {payload: {objection: objection}});
       _state = updateOneObjection(_state, action, fieldName, value);
     }
   );

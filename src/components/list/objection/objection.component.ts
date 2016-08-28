@@ -4,7 +4,11 @@ import { Component, Input, Output, OnInit,
 // import { SortablejsOptions, SORTABLEJS_DIRECTIVES } from 'angular-sortablejs';
 import { SortablejsOptions} from 'angular-sortablejs';
 
-import { IListRecord, IList, IObjectionRecord, IObjection, IRebuttal } from '../../../store/list/list.types';
+import { IList } from '../../../store/list/list.types';
+import { IListRecord } from '../../../store/list/list.types';
+import { IObjection } from '../../../store/list/list.types';
+import { IObjectionRecord } from '../../../store/list/list.types';
+import { IRebuttal } from '../../../store/list/list.types';
 import { RebuttalComponent } from '../rebuttal/rebuttal.component';
 
 @Component({
@@ -35,13 +39,13 @@ export class ObjectionComponent implements OnInit {
         animation: 0
     };
 
-  ngOnInit() {  
-    console.log('list properties: ' + Object.keys(this.list));
-    console.log('objection properties: ' + Object.keys(this.objection));
-    //  console.log('this.list.expanded: ' + this.list.expanded);
-    //  console.log('this.objection.expanded: ' + this.objection.expanded);
+  ngOnInit() { 
+//      debugger; 
+ //   console.log('objection.oninit list properties: ' + Object.keys(this.list));
+ //   console.log('objection.oninit objection properties: ' + Object.keys(this.objection));
   }
 
+/*
     sortOn(...args: any[]) {
 
         return function (a, b) {
@@ -64,5 +68,5 @@ export class ObjectionComponent implements OnInit {
             return 0;
         };
     }
-
+*/
 }

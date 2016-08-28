@@ -33,7 +33,7 @@ export const ListFactory = makeTypedFactory<IList, IListRecord>({
     let _touched = false;
     // TODO make this a for loop with early exits
     this.objections.forEach(objection => {
-      objection.get('rebuttals').forEach(rebuttal => {
+      objection.rebuttals.forEach(rebuttal => {
         if ( rebuttal.touched ) {
           _touched = true;
         }

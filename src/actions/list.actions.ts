@@ -78,7 +78,7 @@ export class ListActions {
   starObjection({objection}) {
     this.ngRedux.dispatch({
       type: ListActions.EDITABLE_TOGGLED,
-      payload: { objectionId: objection.id }
+      payload: { objection: objection }
     });
   }
 
@@ -93,7 +93,7 @@ export class ListActions {
   reorderRebuttals({objection}) {
     this.ngRedux.dispatch({
       type: ListActions.REBUTTALS_REORDERED,
-      payload: { objectionId: objection.id }
+      payload: { objection: objection }
     });
   }
 
@@ -101,7 +101,7 @@ export class ListActions {
     this.ngRedux.dispatch(
       { 
        type: ListActions.OBJECTION_EXPANDED,
-       payload: { objectionId: objection.id }
+       payload: { objection: objection }
       });
   }
 
@@ -109,7 +109,7 @@ export class ListActions {
     this.ngRedux.dispatch(
       { 
        type: ListActions.OBJECTION_COLLAPSED,
-       payload: { objectionId: objection.id }
+       payload: { objection: objection }
       });
   }
 
@@ -118,14 +118,17 @@ export class ListActions {
   cancelRebuttal({rebuttal, objection}) {
     this.ngRedux.dispatch({ 
       type: ListActions.REBUTTAL_CANCELED,
-       payload: { rebuttalId: rebuttal.id }
+       payload: { rebuttal: rebuttal,
+                  objection: objection }
     });
   }
 
-  saveRebuttal({rebuttal, objection}) {
+  saveRebuttal({rebuttal, objection, newRebuttal}) {
     this.ngRedux.dispatch({ 
       type: ListActions.REBUTTAL_SAVED,
-       payload: { rebuttalId: rebuttal.id }
+       payload: { rebuttal: rebuttal,
+                  objection: objection,
+                  newRebuttal: newRebuttal }
     });
 
   }
@@ -133,8 +136,8 @@ export class ListActions {
   makeRebuttalEditable({rebuttal, objection}) {
     this.ngRedux.dispatch({ 
       type: ListActions.REBUTTAL_MADE_EDITABLE, 
-      payload: { rebuttalId: rebuttal.id,
-                 objectionId: objection.id }
+      payload: { rebuttal: rebuttal,
+                 objection: objection }
     });
   }
 

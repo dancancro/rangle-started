@@ -29,9 +29,10 @@ import { ListFactory } from '../store/list/list.initial-state';
   providers: [DataService, ListActions]
 })
 export class ListPage implements OnInit {
-  @select(['list', 'objections']) objection$: Observable<IObjection[]>;
-  @select(['list']) list: IList;
-  
+ // @select(['list', 'objections']) objection$;
+  @select('list') private list: Observable<IList>;
+  @select(['list', 'objections']) private objections: Observable<IObjection[]>;
+
   private subscription: any;
   options: SortablejsOptions = {
     disabled: false
@@ -47,8 +48,8 @@ export class ListPage implements OnInit {
     this.subscription = this.dataService.getObjections().subscribe({
         next: (objections) => {
           this.listActions.fetchObjections(objections);
-          console.log('list properties: ' + Object.keys(this.list));
-          console.log('objection$ properties: ' + Object.keys(this.objection$));
+          console.log('page.oninit list properties: ' + Object.keys(this.list));
+//          console.log('objection$ properties: ' + Object.keys(this.objection$));
         },
         error: (err) => this.listActions.error(err)
       });
