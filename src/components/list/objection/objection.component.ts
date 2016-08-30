@@ -1,7 +1,6 @@
 import { Component, Input, Output, OnInit,
          EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
-// import { SortablejsOptions, SORTABLEJS_DIRECTIVES } from 'angular-sortablejs';
 import { SortablejsOptions} from 'angular-sortablejs';
 
 import { IList } from '../../../store/list/list.types';

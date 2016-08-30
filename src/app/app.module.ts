@@ -8,6 +8,7 @@ import {FormBuilder} from '@angular/forms';
 import {BernieApp} from './app';
 import {SessionActions} from '../actions/session.actions';
 import {SessionEpics} from '../epics/session.epics';
+import { ListEpics } from '../epics/list.epics';
 import { ListActions } from '../actions/list.actions';
 import { RioAboutPage, RioCounterPage, ListPage } from '../pages';
 import {RioCounter} from '../components/counter/counter.component';
@@ -45,7 +46,8 @@ import { ListModule } from '../components/list/list.module';
     NgReduxRouter,
     appRoutingProviders,
     SessionActions,
-    SessionEpics
+    SessionEpics,
+    ListEpics
   ]
 })
 export class BernieAppModule { }

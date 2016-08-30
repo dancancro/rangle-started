@@ -5,6 +5,7 @@ import { ListActions } from './list.actions';
 
 export interface IPayloadAction extends Action {
   payload?: any;
+
 }
 
 export const ACTION_PROVIDERS = [ CounterActions, SessionActions, ListActions ];

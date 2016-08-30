@@ -11,3 +11,7 @@ input {
   padding: 6px 12px;
   width: 100%;
 }
+
+a {
+  text-decoration: none;
+}

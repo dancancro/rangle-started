@@ -18,7 +18,7 @@ export interface IObjection {
   star?: boolean;
   
   // UI state
-  reordered: boolean;
+  rebuttalsReordered: boolean;
   expanded: boolean;
 
   // methods

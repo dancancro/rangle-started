@@ -9,6 +9,7 @@ import { createEpicMiddleware } from 'redux-observable';
 import { IAppState, ISession, rootReducer } from '../store';
 import { SessionActions } from '../actions/session.actions';
 import { SessionEpics } from '../epics/session.epics';
+import { ListEpics } from '../epics/list.epics';
 import { RioAboutPage, RioCounterPage } from '../pages';
 import { middleware, enhancers, reimmutify } from '../store';
 
@@ -40,7 +41,8 @@ export class BernieApp {
     private ngRedux: NgRedux<IAppState>,
     private ngReduxRouter: NgReduxRouter,
     private actions: SessionActions,
-    private epics: SessionEpics) {
+    private epics: SessionEpics,
+    private listEpics: ListEpics) {
 
     const enh = (__DEV__ && devTools.isEnabled()) ?
       [ ... enhancers, devTools.enhancer({
@@ -48,6 +50,7 @@ export class BernieApp {
       }) ] :
       enhancers;
 
+    middleware.push(createEpicMiddleware(this.listEpics.saveAll));
     middleware.push(createEpicMiddleware(this.epics.login));
 
     ngRedux.configureStore(rootReducer, {}, middleware, enhancers);

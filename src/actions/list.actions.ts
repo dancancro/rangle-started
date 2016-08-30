@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { NgRedux } from 'ng2-redux';
 
 import { IAppState } from '../store';
-import { IObjection } from '../store';
+import { DataService } from '../services/data.service';
 
 @Injectable()
 export class ListActions {
@@ -15,6 +15,7 @@ export class ListActions {
   static ALL_EXPANDED = 'ALL_EXPANDED';
   static ALL_COLLAPSED = 'ALL_COLLAPSED';
   static EDITABLE_TOGGLED = 'EDITABLE_TOGGLED';
+  static ALL_SAVED = 'ALL_SAVED';
 
   static REBUTTAL_ADDED = 'REBUTTAL_ADDED';
   static OBJECTION_STARRED = 'OBJECTION_STARRED';
@@ -26,7 +27,8 @@ export class ListActions {
   static REBUTTAL_SAVED = 'REBUTTAL_SAVED';
   static REBUTTAL_MADE_EDITABLE = 'REBUTTAL_MADE_EDITABLE';
 
-  constructor(private ngRedux: NgRedux<IAppState>) { }
+  constructor(private ngRedux: NgRedux<IAppState>, 
+              private dataService: DataService) { }
 
 // List Actions
 
@@ -67,17 +69,27 @@ export class ListActions {
     });
   }
 
+  saveAll({objections}) {
+    this.ngRedux.dispatch({
+      type: ListActions.ALL_SAVED,
+      payload: { objections: objections }
+    });
+  }
+
 // Objection Actions
 
-  addRebuttal() {
+  addRebuttal({objection}) {
     this.ngRedux.dispatch({
-      type: ListActions.EDITABLE_TOGGLED
+      type: ListActions.REBUTTAL_ADDED,
+      payload: {
+        objection: objection
+      }
     });
   }
 
   starObjection({objection}) {
     this.ngRedux.dispatch({
-      type: ListActions.EDITABLE_TOGGLED,
+      type: ListActions.OBJECTION_STARRED,
       payload: { objection: objection }
     });
   }
@@ -150,17 +162,6 @@ export class ListActions {
     //  toggleRebuttals(span);
   }
 
-  saveAll() {
-    //    this.dataxxService.saveObjections(this.store.objections);
-
-    // this.objectionStore.objections.forEach(objection => {
-    //   objection.reordered = false;
-    //   objection.rebuttals.forEach(rebuttal =>
-    //     rebuttal.touched = false);
-    // });
-  // this.touched = false;
-  }
-  
   error(err): void {
     this.ngRedux.dispatch({
       type: ListActions.OBJECTIONS_FETCHED_ERROR,

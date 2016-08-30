@@ -29,7 +29,6 @@ import { ListFactory } from '../store/list/list.initial-state';
   providers: [DataService, ListActions]
 })
 export class ListPage implements OnInit {
- // @select(['list', 'objections']) objection$;
   @select('list') private list: Observable<IList>;
   @select(['list', 'objections']) private objections: Observable<IObjection[]>;
 
@@ -46,13 +45,8 @@ export class ListPage implements OnInit {
   ngOnInit() {
     // TODO: Maybe this should happen in a new ngModule
     this.subscription = this.dataService.getObjections().subscribe({
-        next: (objections) => {
-          this.listActions.fetchObjections(objections);
-          console.log('page.oninit list properties: ' + Object.keys(this.list));
-//          console.log('objection$ properties: ' + Object.keys(this.objection$));
-        },
+        next: (objections) => this.listActions.fetchObjections(objections),
         error: (err) => this.listActions.error(err)
       });
-
   }
 }

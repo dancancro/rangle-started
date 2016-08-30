@@ -13,8 +13,7 @@ export class DataService {
     result: Object;
     combined: any;
     error: Object;
-    // getUrl: string = 'https://script.google.com/macros/s/AKfycbymzGKzgGkVo4k'
-    // + 'epy9zKIyDlxbnLbp-ivCvj8mVMClmWgr-V-g/exec?json=1';
+    // getUrl: string = 'https://script.google.com/macros/s/AKfycbymzGKzgGkVo4kepy9zKIyDlxbnLbp-ivCvj8mVMClmWgr-V-g/exec?json=1';
      getUrl: string = '/objections.json';  // faster. use for dev
     postUrl: string = 'https://script.google.com/macros/s/AKfycbymzGKzgGkVo4ke'
     + 'py9zKIyDlxbnLbp-ivCvj8mVMClmWgr-V-g/exec';
@@ -45,7 +44,7 @@ export class DataService {
      //   console.log(submission);
 
         function getOrderings(obs) {
-            return obs.filter(objection => objection.reordered)
+            return obs.filter(objection => objection.rebuttalsReordered)
                 .map(objection => {
                     return {
                         'id': objection.id,
@@ -87,10 +86,11 @@ export class DataService {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
-        this.http.post(this.postUrl, submission, { headers: headers })
-            .map((res: Response) => res.json())
-            .subscribe();
-        // .subscribe(() res:Benefit) => this.postResponse = res);
+        return this.http.post(this.postUrl, submission, { headers: headers })
+            .map((res: Response) => res.json());
+           // .subscribe();
+           // .subscribe(( res ) => this.postResponse = res);
 
     }
 }
+

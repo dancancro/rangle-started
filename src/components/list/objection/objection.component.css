@@ -10,6 +10,10 @@ img {
   width: 80%;
 }
 
+a {
+  text-decoration: none;
+}
+
 .objection-graphic {
   font-weight: bold;
   text-align: center;
