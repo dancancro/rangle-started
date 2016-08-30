@@ -55,10 +55,10 @@ export function listReducer(state: IListRecord = INITIAL_LIST_STATE,
       return state;
 
     case ListActions.ALL_EXPANDED:
-      return expandAll(state, action, true);
+      return expandAll(state, objections, action, true);
 
     case ListActions.ALL_COLLAPSED:
-      return expandAll(state, action, false);
+      return expandAll(state, objections, action, false);
 
     case ListActions.EDITABLE_TOGGLED:
       return updateListField(state, action, 'editable', !state.get('editable'));
@@ -139,10 +139,10 @@ function updateOneObjection(state: IListRecord, objectionIndex: number, fieldNam
         );
 }
 
-function updateAllObjections(state: IListRecord, action: IPayloadAction, fieldName: string, value: any): IListRecord {
+function updateAllObjections(state: IListRecord, action: IPayloadAction, objections: List<IObjection>, fieldName: string, value: any): IListRecord {
   let _state = state;
   state.get('objections').forEach(objection => {
-      let objectionIndex = findObjectionIndex(this.objections, objection.id);
+      let objectionIndex = findObjectionIndex(objections, objection.id);
       action = Object.assign({}, action, {payload: {objection: objection}});
       _state = updateOneObjection(_state, objectionIndex, fieldName, value);
     }
@@ -150,8 +150,8 @@ function updateAllObjections(state: IListRecord, action: IPayloadAction, fieldNa
   return _state;
 }
 
-function expandAll(state: IListRecord, action: IPayloadAction, expand: boolean) {
-  let _state = updateAllObjections(state, action, 'expanded', expand);
+function expandAll(state: IListRecord, objections: List<IObjection>, action: IPayloadAction, expand: boolean) {
+  let _state = updateAllObjections(state, action, objections, 'expanded', expand);
   return updateListField(_state, action, 'expanded', expand);
 }
 
