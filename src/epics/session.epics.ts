@@ -15,7 +15,7 @@ export class SessionEpics {
 
   login = (action$: Observable<IPayloadAction>) => {
     return action$.filter(({ type }) => type === SessionActions.LOGIN_USER)
-      .flatMap(({ payload }) => {
+      .map(({ payload }) => {
         return this.http.post(`${BASE_URL}/auth/login`, payload)
           .map(result => ({
             type: SessionActions.LOGIN_USER_SUCCESS,

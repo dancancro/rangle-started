@@ -19,6 +19,11 @@
         class="text-decoration-none">About Us</a>
     </rio-navigator-item>
 
+    <rio-navigator-item *ngIf="loggedIn$ | async">
+      <a [routerLink]="['/list']"
+        class="text-decoration-none">Objections</a>
+    </rio-navigator-item>
+
     <div class="flex flex-auto"></div>
 
     <rio-navigator-item testid="user-profile" *ngIf="loggedIn$ | async" [mr]=true>

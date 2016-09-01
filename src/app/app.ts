@@ -1,5 +1,4 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { ROUTER_DIRECTIVES } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import { DevToolsExtension, NgRedux, select } from 'ng2-redux';
@@ -50,7 +49,7 @@ export class BernieApp {
       }) ] :
       enhancers;
 
-    middleware.push(createEpicMiddleware(this.listEpics.saveAll));
+ //   middleware.push(createEpicMiddleware(this.listEpics.saveAll));
     middleware.push(createEpicMiddleware(this.epics.login));
 
     ngRedux.configureStore(rootReducer, {}, middleware, enhancers);

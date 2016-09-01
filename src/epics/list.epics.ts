@@ -15,7 +15,7 @@ export class ListEpics {
 
   saveAll = (action$: Observable<IPayloadAction>) => {
     return action$.filter(({ type }) => type === ListActions.ALL_SAVED)
-      .flatMap(({ payload }) => {
+      .map(({ payload }) => {
         return this.http.post(`${BASE_URL}/list`, payload)
           .map(result => ({
             type: ListActions.OBJECTIONS_FETCHED_OK,
@@ -28,3 +28,7 @@ export class ListEpics {
      });
   }
 }
+
+// console.log('Same instance?', this.myService === injector.get(MyService));
+// import { ActionsObservable } from 'redux-observable';
+// import { MiddlewareAPI } from 'redux';
