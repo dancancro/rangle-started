@@ -6,6 +6,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/mergeMap';
 
 const BASE_URL = '/api';
 
@@ -15,7 +16,7 @@ export class ListEpics {
 
   saveAll = (action$: Observable<IPayloadAction>) => {
     return action$.filter(({ type }) => type === ListActions.ALL_SAVED)
-      .map(({ payload }) => {
+      .mergeMap(({ payload }) => {
         return this.http.post(`${BASE_URL}/list`, payload)
           .map(result => ({
             type: ListActions.OBJECTIONS_FETCHED_OK,

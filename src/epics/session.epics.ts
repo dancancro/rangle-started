@@ -6,6 +6,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/mergeMap';
 
 const BASE_URL = '/api';
 
@@ -15,7 +16,7 @@ export class SessionEpics {
 
   login = (action$: Observable<IPayloadAction>) => {
     return action$.filter(({ type }) => type === SessionActions.LOGIN_USER)
-      .map(({ payload }) => {
+      .mergeMap(({ payload }) => {
         return this.http.post(`${BASE_URL}/auth/login`, payload)
           .map(result => ({
             type: SessionActions.LOGIN_USER_SUCCESS,
