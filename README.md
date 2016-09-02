@@ -1,4 +1,4 @@
-A project made from [range-starter](https://www.npmjs.com/package/rangle-starter)
+A project made from [rangle-starter](https://www.npmjs.com/package/rangle-starter)
 
 Benefits:
 
