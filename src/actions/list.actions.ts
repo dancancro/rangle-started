@@ -69,11 +69,23 @@ export class ListActions {
     });
   }
 
+  // saveAll({objections}) {
+  //   objections.subscribe((obs) =>
+  //   this.dataService.saveObjections(obs)
+  //   .subscribe(() =>
+  //     this.ngRedux.dispatch({
+  //       type: ListActions.OBJECTIONS_FETCHED_OK,
+  //       payload: { objections: obs }
+  //     })
+  //   )
+  //   );
+  // }
+
   saveAll({objections}) {
-    this.ngRedux.dispatch({
-      type: ListActions.ALL_SAVED,
-      payload: { objections: objections }
-    });
+      this.ngRedux.dispatch({
+        type: ListActions.ALL_SAVED,
+        payload: {objections: objections}
+      });
   }
 
 // Objection Actions

@@ -15,9 +15,8 @@ export class DataService {
     error: Object;
     // getUrl: string = 'https://script.google.com/macros/s/AKfycbymzGKzgGkVo4kepy9zKIyDlxbnLbp-ivCvj8mVMClmWgr-V-g/exec?json=1';
      getUrl: string = '/objections.json';  // faster. use for dev
-    postUrl: string = 'https://script.google.com/macros/s/AKfycbymzGKzgGkVo4ke'
-    + 'py9zKIyDlxbnLbp-ivCvj8mVMClmWgr-V-g/exec';
-
+    // postUrl: string = 'https://script.google.com/macros/s/AKfycbymzGKzgGkVo4kepy9zKIyDlxbnLbp-ivCvj8mVMClmWgr-V-g/exec';
+    postUrl: string = '/api/list';
     // static getObjection(objections: any[], id: number): ObjectionModel {
     //     return objections.filter(function(objection) {
     //         return objection.id === id
@@ -81,16 +80,13 @@ export class DataService {
         alert('Thank you! We have received your change suggestions ' 
         + 'and will review them for inclusion in the resource.');
 
-
+        console.log(submission);
 
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
         return this.http.post(this.postUrl, submission, { headers: headers })
             .map((res: Response) => res.json());
-           // .subscribe();
-           // .subscribe(( res ) => this.postResponse = res);
-
     }
 }
 

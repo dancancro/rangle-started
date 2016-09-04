@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { DevToolsExtension, NgRedux, select } from 'ng2-redux';
 import { NgReduxRouter } from 'ng2-redux-router';
 import { createEpicMiddleware } from 'redux-observable';
+import { combineEpics } from 'redux-observable';
 
 import { IAppState, ISession, rootReducer } from '../store';
 import { SessionActions } from '../actions/session.actions';
@@ -40,7 +41,7 @@ export class BernieApp {
     private ngRedux: NgRedux<IAppState>,
     private ngReduxRouter: NgReduxRouter,
     private actions: SessionActions,
-    private epics: SessionEpics,
+    private sessionEpics: SessionEpics,
     private listEpics: ListEpics) {
 
     const enh = (__DEV__ && devTools.isEnabled()) ?
@@ -49,8 +50,13 @@ export class BernieApp {
       }) ] :
       enhancers;
 
- //   middleware.push(createEpicMiddleware(this.listEpics.saveAll));
-    middleware.push(createEpicMiddleware(this.epics.login));
+// I don't know how to get this to work so I put a call to it in the action. 
+// That is more explicit, I think too which I've heard recommended.
+//    middleware.push(createEpicMiddleware(this.listEpics.saveAll));
+    middleware.push(createEpicMiddleware(
+                      combineEpics(this.sessionEpics.login, 
+                                   this.listEpics.saveAll)
+                                   ));
 
     ngRedux.configureStore(rootReducer, {}, middleware, enhancers);
     ngReduxRouter.initialize();

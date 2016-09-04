@@ -9,6 +9,7 @@ const authPassport = require('./auth-passport');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const fs = require('fs')
 let users;
 
 /**
@@ -62,6 +63,25 @@ app.post('/api/auth/login',
   passport.authenticate('local'),
   (req, res) => {
     res.status(200).send(JSON.stringify(req.user));
+  }
+);
+
+
+
+app.post('/api/list',
+  (req, res) => {
+    console.log('orderings:\n' + JSON.stringify(req.body.orderings) + '\n\nedits:\n' + JSON.stringify(req.body.edits));
+    fs.readFile('objections.json', {encoding: 'utf-8'}, function(err,data){
+        if (!err){
+          // response.writeHead(200, {'Content-Type': 'text/html'});
+          // response.write(data);
+          // response.end();
+          res.setHeader('Content-Type', 'application/json');
+          res.status(200).send(data);
+        } else {
+          console.log(err);
+        }
+    });
   }
 );
 

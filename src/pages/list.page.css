@@ -2,7 +2,7 @@
   background-color: white;
   font-size: 20px;
   position: fixed;
-  top: 0;
+  top: 53px;   /* TODO: figure out how to make this the bottom of the nav bar */ 
   width: 100%;
   z-index: 1;
 }
