@@ -4,10 +4,10 @@ import { Injectable } from '@angular/core';
 import { NgRedux } from 'ng2-redux';
 
 import { IAppState } from '../store';
-import { DataService } from '../services/data.service';
 
 @Injectable()
 export class ListActions {
+  // List actions
   static OBJECTIONS_FETCHED_OK = 'OBJECTIONS_FETCHED_OK';
   static OBJECTIONS_FETCHED_ERROR = 'OBJECTIONS_FETCHED_ERROR';
   static OBJECTION_ADDED = 'OBJECTION_ADDED';
@@ -17,22 +17,25 @@ export class ListActions {
   static EDITABLE_TOGGLED = 'EDITABLE_TOGGLED';
   static ALL_SAVED = 'ALL_SAVED';
 
+  // Objection actions
   static REBUTTAL_ADDED = 'REBUTTAL_ADDED';
   static OBJECTION_STARRED = 'OBJECTION_STARRED';
   static OBJECTION_EXPANDED = 'OBJECTION_EXPANDED';
   static OBJECTION_COLLAPSED = 'OBJECTION_COLLAPSED';
   static REBUTTALS_REORDERED = 'REBUTTALS_REORDERED';
 
+  // Rebuttal actions
   static REBUTTAL_CANCELED = 'REBUTTAL_CANCELED';
   static REBUTTAL_SAVED = 'REBUTTAL_SAVED';
   static REBUTTAL_MADE_EDITABLE = 'REBUTTAL_MADE_EDITABLE';
 
-  constructor(private ngRedux: NgRedux<IAppState>, 
-              private dataService: DataService) { }
+  constructor(private ngRedux: NgRedux<IAppState>) { }
+  _oldObjections = [];
 
 // List Actions
 
   fetchObjections(objections): void {
+    this._oldObjections = objections;
     this.ngRedux.dispatch({
       type: ListActions.OBJECTIONS_FETCHED_OK,
       payload: {objections: objections}
@@ -81,10 +84,15 @@ export class ListActions {
   //   );
   // }
 
-  saveAll({objections}) {
+  // TODO: This currently compares the original objections set to the current one. 
+  // If this supports observed additions that could be edited, then we'd want to
+  // compare the changes with whatever was served to the page not just the original ones.
+  saveAll() {
       this.ngRedux.dispatch({
         type: ListActions.ALL_SAVED,
-        payload: {objections: objections}
+        payload: {
+          oldObjections: this._oldObjections,
+          newObjections: this.ngRedux.getState().list.objections}
       });
   }
 

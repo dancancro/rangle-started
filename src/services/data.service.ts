@@ -34,47 +34,62 @@ export class DataService {
                 }); // transforms it into an observable of IObjections
     }
 
-    saveObjections(objections) {
+    static getOriginalRebuttal(oldObjections, objectionId, rebuttalId) {
+        return oldObjections.filter((objection) => objection.id === objectionId)[0].rebuttals.filter((rebuttal) => rebuttal.id === rebuttalId)[0];
+    }
+
+    static getOrderings(oldObjections, newObjections) {
+        return newObjections.filter(objection => objection.rebuttalsReordered)
+            .map(objection => {
+                return {
+                    'id': objection.id,
+                    'rebuttals': objection.rebuttals
+                                    .map(rebuttal => rebuttal.id)
+                };
+            }
+            );
+    }
+
+    // static getEdits(oldObjections, newObjections) {
+    //     let edits = [];
+    //     newObjections.forEach(objection =>
+    //         objection.rebuttals.filter(
+    //             rebuttal => rebuttal.touched && rebuttal.id).forEach(rebuttal => {
+    //             let originalRebuttal = DataService.getOriginalRebuttal(oldObjections, objection.id, rebuttal.id);
+    //             edits.push({
+    //                 'rebuttalId': rebuttal.id,
+    //                 'shortName': originalRebuttal.shortName === rebuttal.shortName ? '' : rebuttal.shortName,
+    //                 'longName': originalRebuttal.longName === rebuttal.longName ? '' : rebuttal.longName,
+    //                 'link': originalRebuttal.link === rebuttal.link ? '' : rebuttal.link,
+    //                 'comments': rebuttal.comments});
+    //             }
+    //     ));
+    //     return edits;
+    // }
+
+    static getEdits(oldObjections, newObjections) {
+        let edits = [];
+        newObjections.forEach(objection =>
+            objection.rebuttals.filter(rebuttal => rebuttal.touched && rebuttal.id)
+            .forEach(rebuttal => {
+                let originalRebuttal = DataService.getOriginalRebuttal(oldObjections, objection.id, rebuttal.id);
+                let edit = { rebuttalId: rebuttal.id };
+                if( originalRebuttal.shortName !== rebuttal.shortName ) edit['shortName'] = rebuttal.shortName;
+                if( originalRebuttal.longName !== rebuttal.longName ) edit['longName'] = rebuttal.longName;
+                if( originalRebuttal.link !== rebuttal.link ) edit['link'] = rebuttal.link;
+                if( rebuttal.comments !== '' ) edit['comments'] = rebuttal.comments;
+                edits.push(edit);
+            })
+        );
+        return edits;
+    }
+    
+    saveObjections(oldObjections, newObjections) {
 
         let submission = JSON.stringify({
-            'orderings': getOrderings(objections),
-            'edits': getRebuttalEdits(objections)
+            'orderings': DataService.getOrderings(oldObjections, newObjections),
+            'edits': DataService.getEdits(oldObjections, newObjections)
         });
-     //   console.log(submission);
-
-        function getOrderings(obs) {
-            return obs.filter(objection => objection.rebuttalsReordered)
-                .map(objection => {
-                    return {
-                        'id': objection.id,
-                        'rebuttals': objection.rebuttals
-                                     .map(rebuttal => rebuttal.id)
-                    };
-                }
-                );
-        }
-
-        function getRebuttalEdits(obs) {
-            let edits = [];
-            obs.forEach(objection =>
-                objection.rebuttals.filter(
-                    rebuttal => rebuttal.touched).forEach(rebuttal =>
-                    edits.push({
-                        'rebuttalId': rebuttal.id,
-                        'shortName': 
-                        rebuttal.oldShortName === rebuttal.shortName ? '' 
-                                               : rebuttal.shortName,
-                        'longName': rebuttal.oldLongName 
-                                       === rebuttal.longName ? '' 
-                                                          : rebuttal.longName,
-                        'link': rebuttal.oldLink === rebuttal.link ? '' 
-                                                  : rebuttal.link,
-                        'comments': rebuttal.comments
-                    })
-                )
-            );
-            return edits;
-        }
 
 
         alert('Thank you! We have received your change suggestions ' 
