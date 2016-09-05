@@ -45,11 +45,11 @@ export function listReducer(state: IListRecord = INITIAL_LIST_STATE,
           {
             // Make an IObjection out of every POJO objection. Then replace each one's array of POJO rebuttals with a List of IRebuttals'
             objections: List([...action.payload.objections]
-                              .map(objection => ObjectionFactory(objection).update('rebuttals', (rebuttals) => List(rebuttals.map((rebuttal) => RebuttalFactory(rebuttal))))))
+                              .map(objection => ObjectionFactory(objection).update('rebuttals', (rebs) => List(rebs.map((reb) => RebuttalFactory(reb))))))
           });
 
     case ListActions.OBJECTION_ADDED:
-      return state.update('objections', (objections) => objections.push(ObjectionFactory()));
+      return state.update('objections', (obs) => obs.push(ObjectionFactory()));
 
     case ListActions.OBJECTIONS_REORDERED:
       return state;
@@ -77,7 +77,7 @@ export function listReducer(state: IListRecord = INITIAL_LIST_STATE,
 
     case ListActions.REBUTTAL_ADDED:
       return state.updateIn(['objections', objectionIndex, 'rebuttals'],   
-                             (rebuttals: List<IRebuttal>) => rebuttals.push(NewRebuttalFactory()));
+                             (rebs: List<IRebuttal>) => rebs.push(NewRebuttalFactory()));
       
     case ListActions.OBJECTION_STARRED:
       return updateOneObjection(state, objectionIndex, 'star', true);

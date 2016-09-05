@@ -14,6 +14,7 @@ export const RebuttalFactory = makeTypedFactory<IRebuttal, IRebuttalRecord>({
   shortName: '',
   longName: '',
   link: '',
+  comments: '',
   touched: false,
   editing: false
 });
