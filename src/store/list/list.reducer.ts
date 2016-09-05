@@ -41,7 +41,7 @@ export function listReducer(state: IListRecord = INITIAL_LIST_STATE,
     // List actions
 
     case ListActions.OBJECTIONS_FETCHED_OK:
-      return state.merge(
+      return INITIAL_LIST_STATE.merge(
           {
             // Make an IObjection out of every POJO objection. Then replace each one's array of POJO rebuttals with a List of IRebuttals'
             objections: List([...action.payload.objections]
@@ -94,7 +94,10 @@ export function listReducer(state: IListRecord = INITIAL_LIST_STATE,
     // Rebuttal actions
 
     case ListActions.REBUTTAL_CANCELED:
-      return updateRebuttalField(state, rebuttalIndex, objectionIndex, 'editing', false);
+      if ( rebuttal.id ) {
+        return updateRebuttalField(state, rebuttalIndex, objectionIndex, 'editing', false);
+      }
+      return state.updateIn(['objections', objectionIndex, 'rebuttals'], () => rebuttals.delete(rebuttalIndex));
 
     case ListActions.REBUTTAL_SAVED:
       let newRebuttal = action.payload.newRebuttal;
@@ -129,6 +132,11 @@ function findRebuttalIndex(rebuttals: List<IRebuttal>, id): number {
   return rebuttals.findIndex((rebuttal) => rebuttal.id === id);
 }
 
+function expandAll(state: IListRecord, objections: List<IObjection>, action: IPayloadAction, expand: boolean) {
+  let _state = updateAllObjections(state, action, objections, 'expanded', expand);
+  return updateListField(_state, action, 'expanded', expand);
+}
+
 function updateOneObjection(state: IListRecord, objectionIndex: number, fieldName: string, value: any): IListRecord {
   return (<IListRecord>state).update('objections', 
           (objections: List<IObjectionRecord>) =>
@@ -148,11 +156,6 @@ function updateAllObjections(state: IListRecord, action: IPayloadAction, objecti
     }
   );
   return _state;
-}
-
-function expandAll(state: IListRecord, objections: List<IObjection>, action: IPayloadAction, expand: boolean) {
-  let _state = updateAllObjections(state, action, objections, 'expanded', expand);
-  return updateListField(_state, action, 'expanded', expand);
 }
 
 function updateListField(state: IListRecord, action: IPayloadAction, fieldName: string, value: any): IListRecord {

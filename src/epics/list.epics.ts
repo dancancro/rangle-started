@@ -16,16 +16,20 @@ export class ListEpics {
   constructor(private dataService: DataService) {}
 
   saveAll = (action$: Observable<IPayloadAction>) => {
-//    debugger;
     return action$.filter(({ type }) => type === ListActions.ALL_SAVED)
       .mergeMap(({ payload }) => {
-//        debugger;
         return this.dataService.saveObjections(payload.oldObjections, payload.newObjections)
-          .map(result => ({
-            type: ListActions.OBJECTIONS_FETCHED_OK,
-            payload: result.json()
-          }))
+          .map(result => {
+  //          debugger;
+            alert('Thank you! We have received your change suggestions ' 
+            + 'and will review them for inclusion in the resource.');
+            return {
+              type: ListActions.OBJECTIONS_FETCHED_OK,
+              payload: { objections: result.json() }
+            };
+          })
           .catch(error => {
+            console.log(error);
             return Observable.of({
               type: ListActions.OBJECTIONS_FETCHED_ERROR
             });
@@ -37,3 +41,7 @@ export class ListEpics {
 // console.log('Same instance?', this.myService === injector.get(MyService));
 // import { ActionsObservable } from 'redux-observable';
 // import { MiddlewareAPI } from 'redux';
+// this.subscription = this.dataService.getObjections().subscribe({
+//     next: (objections) => this.listActions.fetchObjections(objections),
+//     error: (err) => this.listActions.error(err)
+//   });

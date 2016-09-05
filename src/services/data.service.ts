@@ -14,14 +14,11 @@ export class DataService {
     combined: any;
     error: Object;
     // getUrl: string = 'https://script.google.com/macros/s/AKfycbymzGKzgGkVo4kepy9zKIyDlxbnLbp-ivCvj8mVMClmWgr-V-g/exec?json=1';
-     getUrl: string = '/objections.json';  // faster. use for dev
+    // getUrl: string = '/objections.json';  // faster. use for dev
     // postUrl: string = 'https://script.google.com/macros/s/AKfycbymzGKzgGkVo4kepy9zKIyDlxbnLbp-ivCvj8mVMClmWgr-V-g/exec';
     postUrl: string = '/api/list';
-    // static getObjection(objections: any[], id: number): ObjectionModel {
-    //     return objections.filter(function(objection) {
-    //         return objection.id === id
-    //     })[0];
-    // }
+    getUrl: string = __DEV__ ? '/objections.json' : 'https://script.google.com/macros/s/AKfycbymzGKzgGkVo4kepy9zKIyDlxbnLbp-ivCvj8mVMClmWgr-V-g/exec?json=1';
+
 
     constructor(private http: Http) {
     }
@@ -50,23 +47,6 @@ export class DataService {
             );
     }
 
-    // static getEdits(oldObjections, newObjections) {
-    //     let edits = [];
-    //     newObjections.forEach(objection =>
-    //         objection.rebuttals.filter(
-    //             rebuttal => rebuttal.touched && rebuttal.id).forEach(rebuttal => {
-    //             let originalRebuttal = DataService.getOriginalRebuttal(oldObjections, objection.id, rebuttal.id);
-    //             edits.push({
-    //                 'rebuttalId': rebuttal.id,
-    //                 'shortName': originalRebuttal.shortName === rebuttal.shortName ? '' : rebuttal.shortName,
-    //                 'longName': originalRebuttal.longName === rebuttal.longName ? '' : rebuttal.longName,
-    //                 'link': originalRebuttal.link === rebuttal.link ? '' : rebuttal.link,
-    //                 'comments': rebuttal.comments});
-    //             }
-    //     ));
-    //     return edits;
-    // }
-
     static getEdits(oldObjections, newObjections) {
         let edits = [];
         newObjections.forEach(objection =>
@@ -74,10 +54,10 @@ export class DataService {
             .forEach(rebuttal => {
                 let originalRebuttal = DataService.getOriginalRebuttal(oldObjections, objection.id, rebuttal.id);
                 let edit = { rebuttalId: rebuttal.id };
-                if( originalRebuttal.shortName !== rebuttal.shortName ) edit['shortName'] = rebuttal.shortName;
-                if( originalRebuttal.longName !== rebuttal.longName ) edit['longName'] = rebuttal.longName;
-                if( originalRebuttal.link !== rebuttal.link ) edit['link'] = rebuttal.link;
-                if( rebuttal.comments !== '' ) edit['comments'] = rebuttal.comments;
+                if ( originalRebuttal.shortName !== rebuttal.shortName ) { edit['shortName'] = rebuttal.shortName; }
+                if ( originalRebuttal.longName !== rebuttal.longName ) { edit['longName'] = rebuttal.longName; }
+                if ( originalRebuttal.link !== rebuttal.link ) { edit['link'] = rebuttal.link; }
+                if ( rebuttal.comments !== '' ) { edit['comments'] = rebuttal.comments; }
                 edits.push(edit);
             })
         );
@@ -91,17 +71,12 @@ export class DataService {
             'edits': DataService.getEdits(oldObjections, newObjections)
         });
 
-
-        alert('Thank you! We have received your change suggestions ' 
-        + 'and will review them for inclusion in the resource.');
-
         console.log(submission);
 
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
-        return this.http.post(this.postUrl, submission, { headers: headers })
-            .map((res: Response) => res.json());
+        return this.http.post(this.postUrl, submission, { headers: headers });
     }
 }
 

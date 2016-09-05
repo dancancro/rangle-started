@@ -22,6 +22,7 @@ export interface IObjection {
   expanded: boolean;
 
   // methods
+  isAdding: Function;
 };
 
 export interface IObjectionRecord extends TypedRecord<IObjectionRecord>, IObjection {};

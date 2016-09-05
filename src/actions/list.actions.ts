@@ -30,7 +30,7 @@ export class ListActions {
   static REBUTTAL_MADE_EDITABLE = 'REBUTTAL_MADE_EDITABLE';
 
   constructor(private ngRedux: NgRedux<IAppState>) { }
-  _oldObjections = [];
+  _oldObjections = [];  // TODO: This should probably go somewhere else
 
 // List Actions
 

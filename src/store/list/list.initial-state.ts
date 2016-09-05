@@ -32,7 +32,10 @@ export const ObjectionFactory = makeTypedFactory<IObjection, IObjectionRecord>({
   id: null,
   name: 'New Objection',
   rebuttalsReordered: false,
-  expanded: false
+  expanded: false,
+  isAdding: function() {
+    return this.rebuttals.find((rebuttal) => rebuttal.editing && (rebuttal.id === null)) !== undefined;
+  }
 });
 
 export const ListFactory = makeTypedFactory<IList, IListRecord>({
