@@ -20,7 +20,7 @@
               (save)="saveRebuttal.emit($event)" 
             ></list-rebuttal>
           </li>
-          <li><button class="btn btn-default btn-xs" title="Add" (click)="addRebuttal.emit({objection: objection})" *ngIf="list.editable" [disabled]="objection.isAdding">Add</button> </li>
+          <li><button class="btn btn-default btn-xs" title="Add" (click)="addRebuttal.emit({objection: objection})" *ngIf="list.editable" [disabled]="objection.isAdding()">Add</button> </li>
         </ul>
       </span>
 </div>
