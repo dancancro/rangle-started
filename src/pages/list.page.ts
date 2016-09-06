@@ -12,6 +12,22 @@ import { SortablejsOptions } from 'angular-sortablejs';
 import { NgRedux } from 'ng2-redux';
 import { select } from 'ng2-redux';
 import { Observable } from 'rxjs/Observable';
+// import {
+//   Connect,
+//   ConnectArray,
+//   FormStore,
+//   NgReduxForms,
+//   composeReducers,
+//   defaultFormReducer,
+// } from 'ng2-redux-form';
+
+import { DataService } from '../services/data.service';
+import { IObjection } from '../store';
+import { IList } from '../store/list/list.types';
+import { IListRecord } from '../store/list/list.types';
+import { ListActions } from '../actions';
+import { ListFactory } from '../store/list/list.initial-state';
+
 import {
   Connect,
   ConnectArray,
@@ -20,13 +36,6 @@ import {
   composeReducers,
   defaultFormReducer,
 } from 'ng2-redux-form';
-
-import { DataService } from '../services/data.service';
-import { IObjection } from '../store';
-import { IList } from '../store/list/list.types';
-import { IListRecord } from '../store/list/list.types';
-import { ListActions } from '../actions';
-import { ListFactory } from '../store/list/list.initial-state';
 
 @Component({
   moduleId: module.id,

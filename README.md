@@ -6,7 +6,7 @@ Developer Experience
 - Immutable data (Immutable)
 - Immutable UI state (Immutable)
 - Centralized actions and mutations
-- Asynchronously fetched JSON data (RsJS Observables + Angular 2 asynch pipe)
+- Asynchronously fetched, bound JSON data (RsJS Observables + Angular 2 async pipe)
 - Hierarchical data
 - Feature module with nested/coupled, logic-free components
 - Inter-component communication with events
