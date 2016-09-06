@@ -12,6 +12,14 @@ import { SortablejsOptions } from 'angular-sortablejs';
 import { NgRedux } from 'ng2-redux';
 import { select } from 'ng2-redux';
 import { Observable } from 'rxjs/Observable';
+import {
+  Connect,
+  ConnectArray,
+  FormStore,
+  NgReduxForms,
+  composeReducers,
+  defaultFormReducer,
+} from 'ng2-redux-form';
 
 import { DataService } from '../services/data.service';
 import { IObjection } from '../store';
