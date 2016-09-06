@@ -45,7 +45,9 @@ export function listReducer(state: IListRecord = INITIAL_LIST_STATE,
           {
             // Make an IObjection out of every POJO objection. Then replace each one's array of POJO rebuttals with a List of IRebuttals'
             objections: List([...action.payload.objections]
-                              .map(objection => ObjectionFactory(objection).update('rebuttals', (rebs) => List(rebs.map((reb) => RebuttalFactory(reb))))))
+                              .map(objection => ObjectionFactory(objection).update('rebuttals', (rebs) => List(rebs.map((reb) => {
+          //                      debugger;
+                                RebuttalFactory(reb)})))))
           });
 
     case ListActions.OBJECTION_ADDED:
@@ -101,19 +103,13 @@ export function listReducer(state: IListRecord = INITIAL_LIST_STATE,
 
     case ListActions.REBUTTAL_SAVED:
       let newRebuttal = action.payload.newRebuttal;
-      let touched = 
-        newRebuttal.shortName.value !== rebuttal.shortName ||
-        newRebuttal.longName.value !== rebuttal.longName ||
-        newRebuttal.link.value !== rebuttal.link ||
-        (newRebuttal.comments.value || '') !== (rebuttal.comments || '');
-      return state.updateIn(['objections', objectionIndex, 'rebuttals', rebuttalIndex], () => RebuttalFactory({
+      return state.updateIn(['objections', objectionIndex, 'rebuttals', rebuttalIndex], () => RebuttalFactory().merge({
         id: action.payload.rebuttal.id,
         shortName: action.payload.newRebuttal.shortName.value, 
         longName: action.payload.newRebuttal.longName.value,
         link: action.payload.newRebuttal.link.value,
         comments: action.payload.newRebuttal.comments.value,
-        touched: touched,
-        editing: false})
+        original: rebuttal.original})
       );
     
     case ListActions.REBUTTAL_MADE_EDITABLE:

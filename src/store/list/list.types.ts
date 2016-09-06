@@ -64,10 +64,11 @@ export interface IRebuttal {
   comments?: string;
 
   // UI state
-  touched: boolean;
   editing: boolean;
+  original: IRebuttal;
 
   // methods
+  isTouched: Function
 }
 
 export interface IRebuttalRecord extends TypedRecord<IRebuttalRecord>, IRebuttal {};

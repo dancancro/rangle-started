@@ -15,18 +15,21 @@ export const RebuttalFactory = makeTypedFactory<IRebuttal, IRebuttalRecord>({
   longName: '',
   link: '',
   comments: '',
-  touched: false,
-  editing: false
+  editing: false,
+  original: null,
+  isTouched: function() {
+    return this.original.shortName !== this.shortName ||
+      this.original.longName !== this.longName ||
+      this.original.link !== this.link ||
+      (this.original.comments || '') !== (this.comments || '');
+  }
 });
 
-export const NewRebuttalFactory = makeTypedFactory<IRebuttal, IRebuttalRecord>({
-  id: null,
-  shortName: '',
-  longName: '',
-  link: '',
-  touched: false,
-  editing: true     // this is true for a Rebuttal you add
-});
+// Do this to extend an entity
+export const NewRebuttalFactory = makeTypedFactory<IRebuttal, IRebuttalRecord>(RebuttalFactory().merge({
+  editing: true,
+  isTouched: function() { return true;}
+}));
 
 export const ObjectionFactory = makeTypedFactory<IObjection, IObjectionRecord>({
   rebuttals: List<IRebuttal>(),
@@ -53,7 +56,7 @@ export const ListFactory = makeTypedFactory<IList, IListRecord>({
         if (typeof rebuttal === 'undefined') {
           console.log(objection.name + ' has an undefined rebuttal at position ' + i);
         }
-        if ( rebuttal.touched ) {
+        if ( rebuttal.isTouched() ) {
           _touched = true;
         }
       });
