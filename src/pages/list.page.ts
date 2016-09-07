@@ -3,6 +3,7 @@ import { ApplicationRef } from '@angular/core';
 import { ChangeDetectionStrategy } from '@angular/core';
 import { Component } from '@angular/core';
 import { ContentChildren } from '@angular/core';
+import { ControlContainer } from '@angular/forms';
 import { ElementRef } from '@angular/core';
 import { Inject } from '@angular/core';
 import { OnInit } from '@angular/core';
@@ -41,7 +42,7 @@ import {
   template: require('./list.page.html'),
   styles: [require('./list.page.css')],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [DataService, ListActions]
+  providers: [DataService, ListActions, ControlContainer]
 })
 export class ListPage implements OnInit, AfterViewChecked {
   @select('list') private list$: Observable<IList>;
