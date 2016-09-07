@@ -27,7 +27,7 @@ export function listReducer(state: IListRecord = INITIAL_LIST_STATE,
         ? findObjectionIndex(objections, action.payload.objection.id) 
         : undefined;
   let rebuttals = objectionIndex !== undefined 
-        ? objections.getIn([objectionIndex, 'rebuttals']) 
+        ? (<IListRecord>state).getIn(['objections', objectionIndex, 'rebuttals']) 
         : undefined;
   let rebuttalIndex = rebuttals && action.payload.rebuttal 
         ? findRebuttalIndex(rebuttals, action.payload.rebuttal.id) 
@@ -138,12 +138,9 @@ function expandAll(state: IListRecord, objections: List<IObjection>, action: IPa
 }
 
 function updateOneObjection(state: IListRecord, objectionIndex: number, fieldName: string, value: any): IListRecord {
-  return (<IListRecord>state).update('objections', 
-          (objections: List<IObjectionRecord>) =>
-             objections.update(
-               objectionIndex, (objection: IObjectionRecord) => 
+  return (<IListRecord>state).updateIn(['objections', objectionIndex], 
+          (objection: IObjectionRecord) => 
                  objection.update(fieldName, () => value)
-               )
         );
 }
 

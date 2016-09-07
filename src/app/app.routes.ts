@@ -16,6 +16,6 @@ export const APP_ROUTES: Routes = [{
   path: 'about',
   component: RioAboutPage
 }, { 
-  path: 'list', 
+  path: 'list/:objection', 
   component: ListPage 
 }];
