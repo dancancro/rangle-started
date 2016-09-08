@@ -138,12 +138,8 @@ function expandAll(state: IListRecord, objections: List<IObjection>, action: IPa
 }
 
 function updateOneObjection(state: IListRecord, objectionIndex: number, fieldName: string, value: any): IListRecord {
-  return (<IListRecord>state).update('objections', 
-          (objections: List<IObjectionRecord>) =>
-             objections.update(
-               objectionIndex, (objection: IObjectionRecord) => 
-                 objection.update(fieldName, () => value)
-               )
+  return (<IListRecord>state).updateIn(['objections', objectionIndex],
+         (objection: IObjectionRecord) => objection.update(fieldName, () => value)
         );
 }
 
