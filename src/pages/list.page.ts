@@ -32,8 +32,8 @@ import { ListFactory } from '../store/list/list.initial-state';
   providers: [DataService, ListActions]
 })
 export class ListPage implements OnInit {
-  @select('list') private list: Observable<IList>;
-  @select(['list', 'objections']) private objections: Observable<IObjection[]>;
+  @select('list') private list$: Observable<IList>;
+  @select(['list', 'objections']) private objections$: Observable<IObjection[]>;
 
   private subscription: any;
   options: SortablejsOptions = {
@@ -54,14 +54,13 @@ export class ListPage implements OnInit {
     //   });
 
 
-    Observable.forkJoin(
-      this.route.params.map(params => params['objection']),
-      this.dataService.getObjections().map(objections => objections)).subscribe(
+    Observable.zip(
+      this.route.params,
+      this.dataService.getObjections()).subscribe(
         (res: Array<any>) => {
-//          debugger;
+          let objectionId = res[0].objection;
           let objections = res[1];
           this.listActions.fetchObjections(objections);
-          let objectionId = res[0];
           if (objectionId) {
             this.listActions.fetchObjections(res[1]);
             let objection = objections.find(o => o.id === +objectionId);
