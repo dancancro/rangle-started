@@ -79,8 +79,8 @@ export function listReducer(state: IListRecord = INITIAL_LIST_STATE,
      case ListActions.SEEK_OBJECTION:
         let y = document.getElementById(objectionId).getBoundingClientRect().top - 100;
         updateListField(state, action, 'scrollY', y)
-        window.scrollBy(0, y);
-        this.listActions.toggleRebuttals({objection: this.objection});
+        window.scrollBy(0, y);  // is this in the right place? is it a side-effect?
+        this.listActions.toggleRebuttals({objection: this.objection});  // can you invoke actions from inside the reducer?
        return state;
       
     // Objection actions

@@ -9,7 +9,10 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/observable/forkJoin';
 import 'rxjs/add/observable/zip';
+import 'rxjs/add/observable/ofType';
+
 import { Observable } from 'rxjs/Observable';
+import { ActionsObservable } from 'redux-observable';
 import { UPDATE_LOCATION } from 'ng2-redux-router';
 
 import { IPayloadAction, ListActions } from '../actions';
@@ -21,8 +24,8 @@ export class ListEpics {
     private route: ActivatedRoute, 
     private dataService: DataService) {}
 
-  saveData = (action$: Observable<IPayloadAction>) => {
-    return action$.filter(({ type }) => type === ListActions.DATA_SAVED)
+  saveData = (action$: ActionsObservable) => {
+    return action$.ofType(ListActions.DATA_SAVED)
       .mergeMap(({ payload }) => {
         return this.dataService.saveObjections(payload.oldObjections, payload.newObjections)
           .map(result => {
@@ -42,13 +45,13 @@ export class ListEpics {
      });
   }
 
-  getData = (action$: Observable<IPayloadAction>) => {
-    return action$.filter(({ type }) => type === ListActions.DATA_SAVED || type === UPDATE_LOCATION)
+  getData = (action$: ActionsObservable) => {
+    return action$.ofType(ListActions.DATA_SAVED, UPDATE_LOCATION)
       .mergeMap(({ payload }) => {
         return Observable.zip(
           this.route.params,
           this.dataService.getObjections())
-          .map(
+          .mergeMap(
             (res: Array<any>) => {
               let objectionId: number = +res[0].objectionId;
               let objections: Array<any> = res[1];
@@ -67,7 +70,7 @@ export class ListEpics {
                   payload: { objection: objectionId }
                 });
               }
-              return Observable.of(outActions);
+              return outActions;
             }
           )       
           .catch(error => {
