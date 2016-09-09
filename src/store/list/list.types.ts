@@ -42,6 +42,7 @@ export interface IList {
   // UI state
   editable: boolean; 
   expanded: boolean;
+  scrollY: number;
 
   // methods
   isTouched: Function;

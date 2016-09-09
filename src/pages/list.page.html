@@ -20,7 +20,7 @@
    <button *ngIf="(list$ | async).editable && (list$ | async).isTouched()"
           class="btn btn-default touched" 
           title="Save changes" 
-          (click)="listActions.saveAll()">
+          (click)="listActions.saveData()">
           Save Changes 
    </button>
    <button *ngIf="(list$ | async).editable && !(list$ | async).isTouched()" 

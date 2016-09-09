@@ -43,6 +43,7 @@ export const ListFactory = makeTypedFactory<IList, IListRecord>({
   objections: List<IObjection>(),
   editable: false, 
   expanded: false,
+  scrollY: 0,
   isTouched: function() {
     let _touched = false;
     // TODO make this a for loop with early exits

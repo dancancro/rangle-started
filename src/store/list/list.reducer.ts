@@ -2,6 +2,7 @@
 import { List } from 'immutable';
 import { Map } from 'immutable';
 import { Record } from 'immutable';
+import { UPDATE_LOCATION } from 'ng2-redux-router';
 
 import { IPayloadAction } from '../../actions';
 import { ListActions } from '../../actions/list.actions';
@@ -23,8 +24,15 @@ export function listReducer(state: IListRecord = INITIAL_LIST_STATE,
   // is it bad to have member state variables in an action creator? does that make the functions not pure?
   // if i don't do this then these lookups will have to go in several functions'
   let objections = (<IListRecord>state).get('objections');
-  let objectionIndex = action.payload && action.payload.objection 
-        ? findObjectionIndex(objections, action.payload.objection.id) 
+  let objection = action.payload.objection;
+  let objectionId = action.payload.objectionId;
+  if (objectionId) {
+    objection = objections.find(objection => objection.id === objectionId);
+  } else if (action.payload && action.payload.objection) {
+    objectionId = action.payload.objection.id;
+  }
+  let objectionIndex = objectionId 
+        ? findObjectionIndex(objections, objectionId) 
         : undefined;
   let rebuttals = objectionIndex !== undefined 
         ? objections.getIn([objectionIndex, 'rebuttals']) 
@@ -64,14 +72,16 @@ export function listReducer(state: IListRecord = INITIAL_LIST_STATE,
       return updateListField(state, action, 'editable', !state.get('editable'));
       // this.options.disabled = !this.options.disabled;   // draggabilitty
 
-    case ListActions.ALL_SAVED:
-    // this.objectionStore.objections.forEach(objection => {
-    //   objection.reordered = false;
-    //   objection.rebuttals.forEach(rebuttal =>
-    //     rebuttal.touched = false);
-    // });
-    // this.touched = false;
+    case ListActions.DATA_SAVED:
+     // TODO
      return state;
+
+     case ListActions.SEEK_OBJECTION:
+        let y = document.getElementById(objectionId).getBoundingClientRect().top - 100;
+        updateListField(state, action, 'scrollY', y)
+        window.scrollBy(0, y);
+        this.listActions.toggleRebuttals({objection: this.objection});
+       return state;
       
     // Objection actions
 

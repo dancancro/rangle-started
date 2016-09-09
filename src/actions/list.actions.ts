@@ -2,8 +2,11 @@
 import { Injectable } from '@angular/core';
 
 import { NgRedux } from 'ng2-redux';
+import { UPDATE_LOCATION } from 'ng2-redux-router';
+import { Router } from '@angular/router';
 
 import { IAppState } from '../store';
+import { DataService } from '../services/data.service';
 
 @Injectable()
 export class ListActions {
@@ -15,7 +18,9 @@ export class ListActions {
   static ALL_EXPANDED = 'ALL_EXPANDED';
   static ALL_COLLAPSED = 'ALL_COLLAPSED';
   static EDITABLE_TOGGLED = 'EDITABLE_TOGGLED';
-  static ALL_SAVED = 'ALL_SAVED';
+  static DATA_SAVED = 'DATA_SAVED';
+  static DATA_GOTTEN = 'DATA_GOTTEN';
+  static SEEK_OBJECTION = 'SEEK_OBJECTION';
 
   // Objection actions
   static REBUTTAL_ADDED = 'REBUTTAL_ADDED';
@@ -29,10 +34,20 @@ export class ListActions {
   static REBUTTAL_SAVED = 'REBUTTAL_SAVED';
   static REBUTTAL_MADE_EDITABLE = 'REBUTTAL_MADE_EDITABLE';
 
-  constructor(private ngRedux: NgRedux<IAppState>) { }
+  constructor(
+    private ngRedux: NgRedux<IAppState>,
+    private dataService: DataService) { }
   _oldObjections = [];  // TODO: This should probably go somewhere else
 
 // List Actions
+
+  getData() {
+      this.ngRedux.dispatch({
+        type: ListActions.DATA_GOTTEN,
+        payload: {
+          newObjections: this.ngRedux.getState().list.objections}
+      });
+  }
 
   fetchObjections(objections): void {
     this._oldObjections = objections;
@@ -72,24 +87,18 @@ export class ListActions {
     });
   }
 
-  // saveAll({objections}) {
-  //   objections.subscribe((obs) =>
-  //   this.dataService.saveObjections(obs)
-  //   .subscribe(() =>
-  //     this.ngRedux.dispatch({
-  //       type: ListActions.OBJECTIONS_FETCHED_OK,
-  //       payload: { objections: obs }
-  //     })
-  //   )
-  //   );
-  // }
+  updateLocation() {
+     this.ngRedux.dispatch({
+      type: UPDATE_LOCATION
+    });
+ }
 
   // TODO: This currently compares the original objections set to the current one. 
   // If this supports observed additions that could be edited, then we'd want to
   // compare the changes with whatever was served to the page not just the original ones.
-  saveAll() {
+  saveData() {
       this.ngRedux.dispatch({
-        type: ListActions.ALL_SAVED,
+        type: ListActions.DATA_SAVED,
         payload: {
           oldObjections: this._oldObjections,
           newObjections: this.ngRedux.getState().list.objections}
@@ -171,15 +180,6 @@ export class ListActions {
       payload: { rebuttal: rebuttal,
                  objection: objection }
     });
-  }
-
-  goTo(id) {
-    //  var y = document.getElementById(id)
-    // .getBoundingClientRect().top - 
-    // $('div .row')[0].getBoundingClientRect().bottom - 10;
-    //  window.scrollBy(0,y);
-    //  var span = $($('#' + id).parent('div')[0]).find('span')[0];
-    //  toggleRebuttals(span);
   }
 
   error(err): void {

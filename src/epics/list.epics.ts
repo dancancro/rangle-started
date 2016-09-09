@@ -1,26 +1,31 @@
+import { ActivatedRoute } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/observable/forkJoin';
+import 'rxjs/add/observable/zip';
+import { Observable } from 'rxjs/Observable';
+import { UPDATE_LOCATION } from 'ng2-redux-router';
 
 import { IPayloadAction, ListActions } from '../actions';
 import { DataService } from '../services/data.service';
 
 @Injectable()
 export class ListEpics {
-  constructor(private dataService: DataService) {}
+  constructor(
+    private route: ActivatedRoute, 
+    private dataService: DataService) {}
 
-  saveAll = (action$: Observable<IPayloadAction>) => {
-    return action$.filter(({ type }) => type === ListActions.ALL_SAVED)
+  saveData = (action$: Observable<IPayloadAction>) => {
+    return action$.filter(({ type }) => type === ListActions.DATA_SAVED)
       .mergeMap(({ payload }) => {
         return this.dataService.saveObjections(payload.oldObjections, payload.newObjections)
           .map(result => {
-  //          debugger;
             alert('Thank you! We have received your change suggestions ' 
             + 'and will review them for inclusion in the resource.');
             return {
@@ -36,6 +41,45 @@ export class ListEpics {
           });
      });
   }
+
+  getData = (action$: Observable<IPayloadAction>) => {
+    return action$.filter(({ type }) => type === ListActions.DATA_SAVED || type === UPDATE_LOCATION)
+      .mergeMap(({ payload }) => {
+        return Observable.zip(
+          this.route.params,
+          this.dataService.getObjections())
+          .map(
+            (res: Array<any>) => {
+              let objectionId: number = +res[0].objectionId;
+              let objections: Array<any> = res[1];
+              let outActions: Array<any> = [];
+              outActions.push( {
+                type: ListActions.OBJECTIONS_FETCHED_OK,
+                payload: { objections: objections }
+              });
+              if (objectionId) {
+                outActions.push({
+                  type: ListActions.SEEK_OBJECTION,
+                  payload: { objectionId: objectionId }
+                });
+                outActions.push({
+                  type: ListActions.OBJECTION_EXPANDED,
+                  payload: { objection: objectionId }
+                });
+              }
+              return Observable.of(outActions);
+            }
+          )       
+          .catch(error => {
+            console.log(error);
+            return Observable.of({
+              type: ListActions.OBJECTIONS_FETCHED_ERROR
+            });
+          });
+        }
+      );
+  }
+
 }
 
 // console.log('Same instance?', this.myService === injector.get(MyService));
