@@ -7,6 +7,7 @@ import { OnInit } from '@angular/core';
 import { OnChanges } from '@angular/core';
 import { QueryList } from '@angular/core';
 import { SortablejsOptions } from 'angular-sortablejs';
+import { ActivatedRoute } from '@angular/router';
 
 import { NgRedux } from 'ng2-redux';
 import { select } from 'ng2-redux';
@@ -36,6 +37,7 @@ export class ListPage implements OnInit, OnChanges {
   };
 
   constructor(
+    private route: ActivatedRoute, 
     public listActions: ListActions) {
   }
 
@@ -48,7 +50,10 @@ export class ListPage implements OnInit, OnChanges {
     // this.subscription = this.dataService.getObjections().subscribe({
     //     next: (objections) => this.listActions.fetchObjections(objections),
     //     error: (err) => this.listActions.error(err)
-    //   });
-    this.listActions.getData();
+    //  });
+  //       this.route.params.subscribe(
+  //         (params) => console.log('route.params in list.page:::: ' + params['objectionId'])
+  //       );
+     this.listActions.getData();
   }
 }

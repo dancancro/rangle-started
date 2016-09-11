@@ -12,6 +12,7 @@ import { SessionEpics } from '../epics/session.epics';
 import { ListEpics } from '../epics/list.epics';
 import { RioAboutPage, RioCounterPage } from '../pages';
 import { middleware, enhancers, reimmutify } from '../store';
+import { ListFactory } from '../store/list';
 
 import {
   RioButton,

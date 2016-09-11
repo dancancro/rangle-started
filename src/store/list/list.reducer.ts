@@ -20,22 +20,28 @@ import { NewRebuttalFactory } from './list.initial-state';
 export function listReducer(state: IListRecord = INITIAL_LIST_STATE,
   action: IPayloadAction): IListRecord {
   
+console.log('in the reducer ' + action.type);
+
   // TODO: make the functions pure
   // is it bad to have member state variables in an action creator? does that make the functions not pure?
   // if i don't do this then these lookups will have to go in several functions'
   let objections = (<IListRecord>state).get('objections');
-  let objection = action.payload.objection;
-  let objectionId = action.payload.objectionId;
+  let objection = action.payload 
+        ? action.payload.objection 
+        : undefined;
+  let objectionId = action.payload 
+        ? action.payload.objectionId
+        : undefined;
   if (objectionId) {
-    objection = objections.find(objection => objection.id === objectionId);
-  } else if (action.payload && action.payload.objection) {
+    objection = objections.find(o => o.id === objectionId);
+  } else if (objection) {
     objectionId = action.payload.objection.id;
   }
   let objectionIndex = objectionId 
         ? findObjectionIndex(objections, objectionId) 
         : undefined;
-  let rebuttals = objectionIndex !== undefined 
-        ? objections.getIn([objectionIndex, 'rebuttals']) 
+  let rebuttals = objection
+        ? objection.rebuttals
         : undefined;
   let rebuttalIndex = rebuttals && action.payload.rebuttal 
         ? findRebuttalIndex(rebuttals, action.payload.rebuttal.id) 
@@ -53,7 +59,7 @@ export function listReducer(state: IListRecord = INITIAL_LIST_STATE,
           {
             // Make an IObjection out of every POJO objection. Then replace each one's array of POJO rebuttals with a List of IRebuttals'
             objections: List([...action.payload.objections]
-                              .map(objection => ObjectionFactory(objection).update('rebuttals', (rebs) => List(rebs.map((reb) => RebuttalFactory(reb))))))
+                              .map(o => ObjectionFactory(o).update('rebuttals', (rebs) => List(rebs.map((reb) => RebuttalFactory(reb))))))
           });
 
     case ListActions.OBJECTION_ADDED:
@@ -77,10 +83,9 @@ export function listReducer(state: IListRecord = INITIAL_LIST_STATE,
      return state;
 
      case ListActions.SEEK_OBJECTION:
-        let y = document.getElementById(objectionId).getBoundingClientRect().top - 100;
-        updateListField(state, action, 'scrollY', y)
+        let y = document.getElementById(objectionId).getBoundingClientRect().top - 80;
+        updateListField(state, action, 'scrollY', y);
         window.scrollBy(0, y);  // is this in the right place? is it a side-effect?
-        this.listActions.toggleRebuttals({objection: this.objection});  // can you invoke actions from inside the reducer?
        return state;
       
     // Objection actions

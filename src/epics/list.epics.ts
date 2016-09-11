@@ -7,13 +7,11 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/observable/forkJoin';
 import 'rxjs/add/observable/zip';
-import 'rxjs/add/observable/ofType';
 
 import { Observable } from 'rxjs/Observable';
 import { ActionsObservable } from 'redux-observable';
-import { UPDATE_LOCATION } from 'ng2-redux-router';
+import { UPDATE_LOCATION } from 'ng2-redux-router'; 
 
 import { IPayloadAction, ListActions } from '../actions';
 import { DataService } from '../services/data.service';
@@ -24,10 +22,10 @@ export class ListEpics {
     private route: ActivatedRoute, 
     private dataService: DataService) {}
 
-  saveData = (action$: ActionsObservable) => {
+  saveData = (action$: ActionsObservable<IPayloadAction>) => {
     return action$.ofType(ListActions.DATA_SAVED)
-      .mergeMap(({ payload }) => {
-        return this.dataService.saveObjections(payload.oldObjections, payload.newObjections)
+      .mergeMap((action) => {
+        return this.dataService.saveObjections(action.payload.oldObjections, action.payload.newObjections)
           .map(result => {
             alert('Thank you! We have received your change suggestions ' 
             + 'and will review them for inclusion in the resource.');
@@ -45,29 +43,38 @@ export class ListEpics {
      });
   }
 
-  getData = (action$: ActionsObservable) => {
-    return action$.ofType(ListActions.DATA_SAVED, UPDATE_LOCATION)
-      .mergeMap(({ payload }) => {
+  getData = (action$: ActionsObservable<IPayloadAction>) => {
+// runs only once
+console.log('in the epic, getData called');
+
+    return action$.ofType(ListActions.DATA_GOTTEN, UPDATE_LOCATION)
+      .mergeMap((action) => {
+
+        // combined subscription of route.params and dataService.getObjections()
         return Observable.zip(
           this.route.params,
           this.dataService.getObjections())
-          .mergeMap(
+          .map(
             (res: Array<any>) => {
-              let objectionId: number = +res[0].objectionId;
+              console.log('list.epics got data');
+              debugger;
+              let objectionId: number = res[0]['objectionId'];
+      // runs every time
               let objections: Array<any> = res[1];
+      console.log('when zipped, objectionId :::: ' + res[0]['objectionId'] + ' objections: ' + objections.length);
               let outActions: Array<any> = [];
               outActions.push( {
                 type: ListActions.OBJECTIONS_FETCHED_OK,
                 payload: { objections: objections }
               });
-              if (objectionId) {
+              if (objectionId !== undefined) {
                 outActions.push({
                   type: ListActions.SEEK_OBJECTION,
                   payload: { objectionId: objectionId }
                 });
                 outActions.push({
                   type: ListActions.OBJECTION_EXPANDED,
-                  payload: { objection: objectionId }
+                  payload: { objectionId: objectionId }
                 });
               }
               return outActions;
