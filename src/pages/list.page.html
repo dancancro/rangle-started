@@ -1,35 +1,35 @@
 <div class="heading">
 <div class="row">
    <div class="block mx-auto">
-    <button *ngIf="!(list | async).expanded"
+    <button *ngIf="!(list$ | async).expanded"
             class="btn btn-default" 
             title="Expand All" 
             (click)="listActions.expandAll()">Expand All
     </button>
-    <button *ngIf="(list | async).expanded"
+    <button *ngIf="(list$ | async).expanded"
             class="btn btn-default" 
             title="Collapse All" 
             (click)="listActions.collapseAll()">Collapse All
     </button>
-    <button *ngIf="!(list | async).editable"
+    <button *ngIf="!(list$ | async).editable"
           class="btn btn-default" 
           title="Arrange rebuttals from strongest to weakest and click this when you are done" 
           (click)="listActions.toggleEditable()" >
           Contribute Mode
    </button>
-   <button *ngIf="(list | async).editable && (list | async).isTouched()"
+   <button *ngIf="(list$ | async).editable && (list$ | async).isTouched()"
           class="btn btn-default touched" 
           title="Save changes" 
           (click)="listActions.saveAll()">
           Save Changes 
    </button>
-   <button *ngIf="(list | async).editable && !(list | async).isTouched()" 
+   <button *ngIf="(list$ | async).editable && !(list$ | async).isTouched()" 
           class="btn btn-default" 
           title="Read only mode" 
           (click)="listActions.toggleEditable()">
           Read-Only Mode 
    </button>
-    <button *ngIf="(list | async).editable" 
+    <button *ngIf="(list$ | async).editable" 
             class="btn btn-default" 
             title="Add a new objection" 
             (click)="listActions.addObjection()">
@@ -38,10 +38,10 @@
    </div>
 </div>
 </div><br><br><br><br>
-<ul id="objection-list" [sortablejs]="objections | async" [sortablejsOptions]="options">
-<li *ngFor="let objection of objections | async">
+<ul id="objection-list" [sortablejs]="objections$ | async" [sortablejsOptions]="options">
+<li *ngFor="let objection of objections$ | async">
    <list-objection 
-   [list]="list | async"
+   [list]="list$ | async"
    [objection]="objection"
 
    (addObjection)="listActions.addObjection()" 

@@ -20,8 +20,23 @@
     </rio-navigator-item>
 
     <rio-navigator-item *ngIf="loggedIn$ | async">
+      <a [routerLink]="['/list/1']"
+        class="text-decoration-none">1</a>
+    </rio-navigator-item>
+
+    <rio-navigator-item *ngIf="loggedIn$ | async">
+      <a [routerLink]="['/list/3']"
+        class="text-decoration-none">3</a>
+    </rio-navigator-item>
+
+    <rio-navigator-item *ngIf="loggedIn$ | async">
+      <a [routerLink]="['/list/5']"
+        class="text-decoration-none">5</a>
+    </rio-navigator-item>
+
+    <rio-navigator-item *ngIf="loggedIn$ | async">
       <a [routerLink]="['/list']"
-        class="text-decoration-none">Objections</a>
+        class="text-decoration-none">All Objections</a>
     </rio-navigator-item>
 
     <div class="flex flex-auto"></div>
