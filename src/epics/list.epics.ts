@@ -44,24 +44,16 @@ export class ListEpics {
   }
 
   getData = (action$: ActionsObservable<IPayloadAction>) => {
-// runs only once
-console.log('in the epic, getData called');
-
     return action$.ofType(ListActions.DATA_GOTTEN, UPDATE_LOCATION)
       .mergeMap((action) => {
 
         // combined subscription of route.params and dataService.getObjections()
         return Observable.zip(
           this.route.params,
-          this.dataService.getObjections())
-          .map(
-            (res: Array<any>) => {
-              console.log('list.epics got data');
+          this.dataService.getObjections(),
+          (params, objections) => {
               debugger;
-              let objectionId: number = res[0]['objectionId'];
-      // runs every time
-              let objections: Array<any> = res[1];
-      console.log('when zipped, objectionId :::: ' + res[0]['objectionId'] + ' objections: ' + objections.length);
+              let objectionId: number = params['objectionId'];
               let outActions: Array<any> = [];
               outActions.push( {
                 type: ListActions.OBJECTIONS_FETCHED_OK,
@@ -77,9 +69,9 @@ console.log('in the epic, getData called');
                   payload: { objectionId: objectionId }
                 });
               }
-              return outActions;
+              return Observable.of(outActions);  // I don't think making it an Observable is necessary
             }
-          )       
+          )    
           .catch(error => {
             console.log(error);
             return Observable.of({

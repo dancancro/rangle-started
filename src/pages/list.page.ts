@@ -51,9 +51,9 @@ export class ListPage implements OnInit, OnChanges {
     //     next: (objections) => this.listActions.fetchObjections(objections),
     //     error: (err) => this.listActions.error(err)
     //  });
-  //       this.route.params.subscribe(
-  //         (params) => console.log('route.params in list.page:::: ' + params['objectionId'])
-  //       );
+        this.route.params.subscribe(
+          (params) => console.log('route.params in list.page:::: ' + params['objectionId'])
+        );
      this.listActions.getData();
   }
 }
