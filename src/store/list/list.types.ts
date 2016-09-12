@@ -65,7 +65,7 @@ export interface IRebuttal {
 
   // UI state
   editing: boolean;
-  original: IRebuttal;
+  original?: IRebuttal;
 
   // methods
   isTouched: Function
