@@ -48,37 +48,9 @@ export class ListPage implements OnInit {
 
   ngOnInit() {
     // TODO: Maybe this should happen in a new ngModule
-    // this.subscription = this.dataService.getObjections().subscribe({
-    //     next: (objections) => this.listActions.fetchObjections(objections),
-    //     error: (err) => this.listActions.error(err)
-    //   });
-
-
-    Observable.zip(
-      this.route.params,
-      this.dataService.getObjections()).subscribe(
-        (res: Array<any>) => {
-          let objectionId = res[0].objection;
-          let objections = res[1];
-          this.listActions.fetchObjections(objections);
-          if (objectionId) {
-            this.listActions.fetchObjections(res[1]);
-            let objection = objections.find(o => o.id === +objectionId);
-            let y = document.getElementById(objectionId).getBoundingClientRect().top - 100;
-            window.scrollBy(0, y);
-            this.listActions.toggleRebuttals({objection: objection});
-          }
-        },
-        (err) => {
-//          debugger;
-          this.listActions.error(err);
-        },
-        () => {
-//          debugger;
-          console.log('done');
-        }
-      );
-
-
+    this.subscription = this.dataService.getObjections().subscribe({
+        next: (objections) => this.listActions.fetchObjections(objections),
+        error: (err) => this.listActions.error(err)
+      });
   }
 }

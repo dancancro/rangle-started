@@ -1,29 +1,32 @@
-A project made from [rangle-starter](https://www.npmjs.com/package/rangle-starter)
+A project made from [rangle|starter](https://www.npmjs.com/package/rangle|starter)
 
-Benefits:
 
-Developer Experience
-- Immutable data (Immutable)
-- Immutable UI state (Immutable)
-- Centralized actions and mutations
-- Asynchronously fetched JSON data (RsJS Observables + Angular 2 asynch pipe)
-- Hierarchical data
-- Feature module with nested/coupled, logic-free components
-- Inter-component communication with events
-- Rewind/playback (Redux dev tools)
-- State inspection (Redux dev tools)
-- Compartmentalized CSS (Angular 2)
-- Routing (Angular 2)
-- Build, source mapping, hot reloading, minification, bundling (Webpack)
-- Type safety (Typescript)
-- Derived, computed attributes
 
-User Experience
-- Editable lists
-- Local storage (redux-localstorage)
-- Validation (Angular 2 Forms)
-- Authentication (rangle-starter + Passport)
-- Responsive styling (basscss)
-- Drag-n-drop (coming)
-- Autocomplete (coming)
-- Undo (coming)
+| Benefits                                                                       | This one       |    Rangle-starter  |  Angular-CLI
+| ------------------------------------------------------------------------------ |:-------------: |:-----------------: | :------------:|
+| Developer Experience                                                           |                |                    |               |
+| Immutable data (Immutable)                                                     |    Y           |          Y         |               |
+| Immutable UI state (Immutable)                                                 |    Y           |          Y         |               |
+| Centralized actions and mutations                                              |    Y           |          Y         |               |
+| Asynchronously fetched JSON data (RsJS Observables + Angular 2 asynch pipe)    |    Y           |          Y         |               |
+| Hierarchical data                                                              |    Y           |          Y         |               |
+| Feature module with nested/coupled, logic-free components                      |    Y           |          Y         |               |
+| Inter-component communication with events                                      |    Y           |          Y         |               |
+| Rewind/playback (Redux dev tools)                                              |    Y           |          Y         |               |
+| State inspection (Redux dev tools)                                             |    Y           |          Y         |               |
+| Compartmentalized CSS (Angular 2)                                              |    Y           |          Y         |       Y       |
+| Routing (Angular 2)                                                            |    Y           |          Y         |       Y       |
+| Build, source mapping, hot reloading, minification, bundling (Webpack)         |    Y           |          Y         |       Y       |
+| Type safety (Typescript)                                                       |    Y           |          Y         |       Y       |
+| Derived, computed attributes                                                   |    Y           |          Y         |               |
+| Update CLI parts                                                               |                |                    |       Y       |
+|                                                                                |                |                    |               |
+| User Experience                                                                |                |                    |               |
+| Editable lists                                                                 |    Y           |                    |               |
+| Local storage (redux-localstorage)                                             |    Y           |          Y         |               |
+| Validation (Angular 2 Forms)                                                   |    Y           |          Y         |               |
+| Authentication (rangle-starter + Passport)                                     |    Y           |          Y         |               |
+| Responsive styling (basscss)                                                   |    Y           |          Y         |               |
+| Drag and drop                                                                  |    coming      |                    |               |
+| Autocomplete                                                                   |    coming      |                    |               |
+| Undo                                                                           |    coming      |                    |               |       
