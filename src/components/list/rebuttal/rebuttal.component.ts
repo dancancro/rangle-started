@@ -20,17 +20,15 @@ export class RebuttalComponent implements OnInit {
   @Output() makeEditable = new EventEmitter();
   @Output() save = new EventEmitter();
 
-  editForm: FormGroup;
-
-  constructor(private formBuilder: FormBuilder) {}
+  constructor() {}
 
   ngOnInit() {
-      this.editForm = this.formBuilder.group({
-        shortName: [this.rebuttal.shortName, Validators.required],
-        longName: [this.rebuttal.longName, Validators.required],
-        link: this.rebuttal.link,
-        comments: this.rebuttal.comments
-      });
+      // this.editForm = this.formBuilder.group({
+      //   shortName: [this.rebuttal.shortName, Validators.required],
+      //   longName: [this.rebuttal.longName, Validators.required],
+      //   link: this.rebuttal.link,
+      //   comments: this.rebuttal.comments
+      // });
     }
 
 }

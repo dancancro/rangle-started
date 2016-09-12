@@ -1,5 +1,4 @@
 <form connect="list">
-</form>
 <div class="heading">
 <div class="row">
    <div class="block mx-auto">
@@ -40,8 +39,8 @@
    </div>
 </div>
 </div><br><br><br><br>
-<ul id="objection-list" [sortablejs]="objection$ | async" [sortablejsOptions]="options">
-<li *ngFor="let objection of objection$ | async">
+<ul id="objection-list" [sortablejs]="objections$ | async" [sortablejsOptions]="options">
+<li *ngFor="let objection of objections$ | async">
    <list-objection 
    [list]="list$ | async"
    [objection]="objection"
@@ -64,4 +63,5 @@
 
 <br><br><br><br><br><br><br><br><br><br><br>
 
+</form>
 Unaffiliated with any campaign. Made by volunteers with optimism for a better future

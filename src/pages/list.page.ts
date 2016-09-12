@@ -17,9 +17,6 @@ import { NgRedux } from 'ng2-redux';
 import { select } from 'ng2-redux';
 import { Observable } from 'rxjs/Observable';
 
-import 'rxjs/add/operator/concat';
-import 'rxjs/add/observable/forkJoin';
-
 import { DataService } from '../services/data.service';
 import { IObjection } from '../store';
 import { IList } from '../store/list/list.types';
@@ -42,11 +39,11 @@ import {
   template: require('./list.page.html'),
   styles: [require('./list.page.css')],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [DataService, ListActions, ControlContainer]
+  providers: [DataService, ListActions]
 })
-export class ListPage implements OnInit, AfterViewChecked {
+export class ListPage implements OnInit{
   @select('list') private list$: Observable<IList>;
-  @select(['list', 'objections']) private objection$: Observable<IObjection[]>;
+  @select(['list', 'objections']) private objections$: Observable<IObjection[]>;
   _objectionId: string;  // this is only used once on load when seeking a specific objection
 
   private subscription: any;
@@ -63,40 +60,12 @@ export class ListPage implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     // TODO: Maybe this should happen in a new ngModule
-    // let a$ :Observable<Params> = this.route.params.map(params => params['objection']);
-    // let b$ :Observable<IObjection[]> = this.dataService.getObjections().map(objections => objections);
     
-    Observable.forkJoin(
-      this.route.params.map(params => params['objection']),
-      this.dataService.getObjections().map(objections => objections)).subscribe(
-        (res: Array<any>) => {
-           let objectionId = res[0];
-           let objections = res[1];
-           this.listActions.fetchObjections(res[1]);
-           let objection = objections.find(o => o.id === +this._objectionId);
-           let y = document.getElementById(objectionId).getBoundingClientRect().top - 100;
-           window.scrollBy(0, y);
-           this.listActions.toggleRebuttals({objection: objection});
-        },
-        (err) => {
-          this.listActions.error(err);
-        },
-        () => console.log('done')
-      );
+    this.subscription = this.dataService.getObjections().subscribe({
+        next: (objections) => this.listActions.fetchObjections(objections),
+        error: (err) => this.listActions.error(err)
+      });
 
-  }
-
-  ngAfterViewChecked() { // to scroll after views are all rendered
-
-    // http://www.w3schools.com/html/html5_webstorage.asp
-    // if (window && window.sessionStorage) {
-    //   let scrollTop = window.sessionStorage.getItem('lastScrollTop');
-    //   if (scrollTop !== null) {
-    //     scrollTop *= 1; // convert to number
-    //     // console.log(scrollTop);
-    //     this.elementRef.nativeElement.scrollTop = scrollTop;
-    //   }
-    // }
   }
 
 }
