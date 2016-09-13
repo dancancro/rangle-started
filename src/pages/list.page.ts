@@ -41,7 +41,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [DataService, ListActions]
 })
-export class ListPage implements OnInit{
+export class ListPage implements OnInit {
   @select('list') private list$: Observable<IList>;
   @select(['list', 'objections']) private objections$: Observable<IObjection[]>;
   _objectionId: string;  // this is only used once on load when seeking a specific objection
