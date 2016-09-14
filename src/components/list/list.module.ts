@@ -1,6 +1,7 @@
 import {NgModule}      from '@angular/core';
 // import {CommonModule} from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { ListPage } from '../../pages/list.page';
 import { ObjectionComponent } from './objection/objection.component';
@@ -13,6 +14,7 @@ import { AsyncPipe } from '@angular/common';
 @NgModule({
   imports: [
     BrowserModule,
+    FormsModule,
     ReactiveFormsModule
   ],
   declarations: [

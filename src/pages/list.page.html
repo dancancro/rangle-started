@@ -40,7 +40,8 @@
 </div>
 </div><br><br><br><br>
 <ul id="objection-list" [sortablejs]="objections$ | async" [sortablejsOptions]="options">
-<li *ngFor="let objection of objections$ | async">
+<template connectArray let-objection connectArrayOf="objections$ | async">
+<li [ngModelGroup]="objection">
    <list-objection 
    [list]="list$ | async"
    [objection]="objection"
@@ -59,6 +60,7 @@
    (makeRebuttalEditable)="listActions.makeRebuttalEditable($event)"
    ></list-objection>
 </li>
+</template>
 </ul>
 
 <br><br><br><br><br><br><br><br><br><br><br>
