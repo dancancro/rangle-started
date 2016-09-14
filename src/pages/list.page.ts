@@ -17,6 +17,9 @@ import { NgRedux } from 'ng2-redux';
 import { select } from 'ng2-redux';
 import { Observable } from 'rxjs/Observable';
 
+import 'rxjs/add/observable/forkJoin';
+import 'rxjs/add/observable/zip';
+
 import { DataService } from '../services/data.service';
 import { IObjection } from '../store';
 import { IList } from '../store/list/list.types';
@@ -41,10 +44,9 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [DataService, ListActions]
 })
-export class ListPage implements OnInit{
+export class ListPage implements OnInit {
   @select('list') private list$: Observable<IList>;
   @select(['list', 'objections']) private objections$: Observable<IObjection[]>;
-  _objectionId: string;  // this is only used once on load when seeking a specific objection
 
   private subscription: any;
   options: SortablejsOptions = {
@@ -53,7 +55,6 @@ export class ListPage implements OnInit{
 
   constructor(
     private route: ActivatedRoute,
-    private elementRef: ElementRef,
     public listActions: ListActions,
     private dataService: DataService) {
     }
