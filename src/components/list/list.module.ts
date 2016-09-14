@@ -1,5 +1,4 @@
 import {NgModule}      from '@angular/core';
-// import {CommonModule} from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -8,7 +7,7 @@ import { ObjectionComponent } from './objection/objection.component';
 import { RebuttalComponent } from './rebuttal/rebuttal.component';
 import { SORTABLEJS_DIRECTIVES } from 'angular-sortablejs';
 import { DataService } from '../../services/data.service';
-
+import { ControlContainer } from '@angular/forms';
 import { AsyncPipe } from '@angular/common';
 
 @NgModule({
@@ -27,10 +26,12 @@ import { AsyncPipe } from '@angular/common';
     ListPage,
     ObjectionComponent,
     RebuttalComponent,
-    BrowserModule
+    BrowserModule,
+    FormsModule,
   ],
   providers: [
-    DataService
+    DataService,
+    ControlContainer
   ]
 })
 export class ListModule { }

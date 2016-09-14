@@ -10,7 +10,7 @@
              <br>{{objection.imageLabel}}
         </div><br>
         <ul class="container" [sortablejs]="objection.rebuttals" [sortablejsOptions]="options" (update)="reorderObjections.emit()">
-        <template connectArray let-rebuttal connectArrayOf="objection.rebuttals">
+          <template connectArray let-rebuttal connectArrayOf="objection.rebuttals">
           <li [ngModelGroup]="rebuttal" [ngClass]="{touched: rebuttal.touched}">
             <list-rebuttal 
               [list]="list"
@@ -18,8 +18,8 @@
               [rebuttal]="rebuttal"
               (cancel)="cancelRebuttal.emit($event)" 
               (makeEditable)="makeRebuttalEditable.emit($event)" 
-              (save)="saveRebuttal.emit($event)" 
-            ></list-rebuttal>
+              (save)="saveRebuttal.emit($event)" >
+            </list-rebuttal>
           </li>
           </template>
           <li><button class="btn btn-default btn-xs" title="Add" (click)="addRebuttal.emit({objection: objection})" *ngIf="list.editable" [disabled]="objection.isAdding()">Add</button> </li>

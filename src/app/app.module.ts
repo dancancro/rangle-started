@@ -9,7 +9,7 @@ import {SessionActions} from '../actions/session.actions';
 import {SessionEpics} from '../epics/session.epics';
 import { ListEpics } from '../epics/list.epics';
 import { ListActions } from '../actions/list.actions';
-import { RioAboutPage, RioCounterPage, ListPage } from '../pages';
+import { RioAboutPage, RioCounterPage } from '../pages';
 import {RioCounter} from '../components/counter/counter.component';
 import {RioLoginModule} from '../components/login/login.module';
 import {RioUiModule} from '../components/ui/ui.module';

@@ -9,6 +9,7 @@ import { IObjection } from '../../../store/list/list.types';
 import { IObjectionRecord } from '../../../store/list/list.types';
 import { IRebuttal } from '../../../store/list/list.types';
 import { RebuttalComponent } from '../rebuttal/rebuttal.component';
+import { ListModule } from '../list.module';
 
 @Component({
     moduleId: module.id,
