@@ -1,4 +1,5 @@
-A project made from [rangle|starter](https://www.npmjs.com/package/rangle|starter)
+A project made from [rangle-starter](https://www.npmjs.com/package/rangle-starter) 
+to replace [this project](http://www.bernierebuttals.org) made with JQuery and Google Scripts
 
 
 
