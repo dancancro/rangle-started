@@ -49,7 +49,7 @@ export class ListPage implements OnInit {
   ngOnInit() {
     // TODO: Maybe this should happen in a new ngModule
     this.subscription = this.dataService.getObjections().subscribe({
-        next: (objections) => this.listActions.fetchObjections(objections),
+        next: (objections) => this.listActions.storeObjections(objections),
         error: (err) => this.listActions.error(err)
       });
   }

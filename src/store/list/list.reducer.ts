@@ -22,7 +22,13 @@ export function listReducer(state: IListRecord = INITIAL_LIST_STATE,
   // TODO: make the functions pure
   // is it bad to have member state variables in an action creator? does that make the functions not pure?
   // if i don't do this then these lookups will have to go in several functions'
+  if (action.type.indexOf('PROBE_UNKNOWN_ACTION')>=0) {
+    debugger;
+  }
   let objections = (<IListRecord>state).get('objections');
+
+console.log('[action: ' + action.type + '] [objection: ' + typeof objections + '] [getIn:  ' + typeof objections.getIn + ']' );
+
   let objectionIndex = action.payload && action.payload.objection 
         ? findObjectionIndex(objections, action.payload.objection.id) 
         : undefined;
@@ -46,7 +52,6 @@ export function listReducer(state: IListRecord = INITIAL_LIST_STATE,
             // Make an IObjection out of every POJO objection. Then replace each one's array of POJO rebuttals with a List of IRebuttals'
             objections: List([...action.payload.objections]
                               .map(objection => ObjectionFactory(objection).update('rebuttals', (rebs) => List(rebs.map((reb) => {
-          //                      debugger;
                                 RebuttalFactory(reb)})))))
           });
 
@@ -134,9 +139,7 @@ function expandAll(state: IListRecord, objections: List<IObjection>, action: IPa
 }
 
 function updateOneObjection(state: IListRecord, objectionIndex: number, fieldName: string, value: any): IListRecord {
-  return (<IListRecord>state).updateIn(['objections', objectionIndex],
-         (objection: IObjectionRecord) => objection.update(fieldName, () => value)
-        );
+  return (<IListRecord>state).updateIn(['objections', objectionIndex, fieldName],() => value);
 }
 
 function updateAllObjections(state: IListRecord, action: IPayloadAction, objections: List<IObjection>, fieldName: string, value: any): IListRecord {

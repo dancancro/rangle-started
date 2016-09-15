@@ -11,6 +11,7 @@ export class ListActions {
   static OBJECTIONS_FETCHED_OK = 'OBJECTIONS_FETCHED_OK';
   static OBJECTIONS_FETCHED_ERROR = 'OBJECTIONS_FETCHED_ERROR';
   static OBJECTION_ADDED = 'OBJECTION_ADDED';
+  static OBJECTIONS_STORED = 'OBJECTIONS_STORED';
   static OBJECTIONS_REORDERED = 'OBJECTIONS_REORDERED';
   static ALL_EXPANDED = 'ALL_EXPANDED';
   static ALL_COLLAPSED = 'ALL_COLLAPSED';
@@ -34,10 +35,10 @@ export class ListActions {
 
 // List Actions
 
-  fetchObjections(objections): void {
+  storeObjections(objections): void {
     this._oldObjections = objections;
     this.ngRedux.dispatch({
-      type: ListActions.OBJECTIONS_FETCHED_OK,
+      type: ListActions.OBJECTIONS_STORED,
       payload: {objections: objections}
     });
   }

@@ -18,11 +18,10 @@ export const RebuttalFactory = makeTypedFactory<IRebuttal, IRebuttalRecord>({
   editing: false,
   original: null,
   isTouched: function() {
-    return false;
-    // this.original && this.original.shortName !== this.shortName ||
-    //   this.original.longName !== this.longName ||
-    //   this.original.link !== this.link ||
-    //   (this.original.comments || '') !== (this.comments || '');
+    return this.original && this.original.shortName !== this.shortName ||
+      this.original.longName !== this.longName ||
+      this.original.link !== this.link ||
+      (this.original.comments || '') !== (this.comments || '');
   }
 });
 
