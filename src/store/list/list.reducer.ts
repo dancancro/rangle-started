@@ -22,9 +22,6 @@ export function listReducer(state: IListRecord = INITIAL_LIST_STATE,
   // TODO: make the functions pure
   // is it bad to have member state variables in an action creator? does that make the functions not pure?
   // if i don't do this then these lookups will have to go in several functions'
-  if (action.type.indexOf('PROBE_UNKNOWN_ACTION')>=0) {
-    debugger;
-  }
   let objections = (<IListRecord>state).get('objections');
 
 console.log('[action: ' + action.type + '] [objection: ' + typeof objections + '] [getIn:  ' + typeof objections.getIn + ']' );
@@ -46,13 +43,13 @@ console.log('[action: ' + action.type + '] [objection: ' + typeof objections + '
 
     // List actions
 
-    case ListActions.OBJECTIONS_FETCHED_OK:
-      return INITIAL_LIST_STATE.merge(
+    case ListActions.OBJECTIONS_STORED:
+      return state.merge(
           {
             // Make an IObjection out of every POJO objection. Then replace each one's array of POJO rebuttals with a List of IRebuttals'
             objections: List([...action.payload.objections]
-                              .map(objection => ObjectionFactory(objection).update('rebuttals', (rebs) => List(rebs.map((reb) => {
-                                RebuttalFactory(reb)})))))
+                              .map(objection => ObjectionFactory(objection).update('rebuttals', (rebs) => List(rebs.map((reb) => 
+                                RebuttalFactory(reb))))))
           });
 
     case ListActions.OBJECTION_ADDED:
@@ -114,7 +111,7 @@ console.log('[action: ' + action.type + '] [objection: ' + typeof objections + '
         longName: action.payload.newRebuttal.longName.value,
         link: action.payload.newRebuttal.link.value,
         comments: action.payload.newRebuttal.comments.value,
-        original: rebuttal.original})
+        original: rebuttal.original || rebuttal })
       );
     
     case ListActions.REBUTTAL_MADE_EDITABLE:

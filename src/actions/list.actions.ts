@@ -8,7 +8,7 @@ import { IAppState } from '../store';
 @Injectable()
 export class ListActions {
   // List actions
-  static OBJECTIONS_FETCHED_OK = 'OBJECTIONS_FETCHED_OK';
+//  static OBJECTIONS_FETCHED_OK = 'OBJECTIONS_FETCHED_OK';
   static OBJECTIONS_FETCHED_ERROR = 'OBJECTIONS_FETCHED_ERROR';
   static OBJECTION_ADDED = 'OBJECTION_ADDED';
   static OBJECTIONS_STORED = 'OBJECTIONS_STORED';

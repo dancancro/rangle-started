@@ -24,7 +24,7 @@ export class ListEpics {
             alert('Thank you! We have received your change suggestions ' 
             + 'and will review them for inclusion in the resource.');
             return {
-              type: ListActions.OBJECTIONS_FETCHED_OK,
+              type: ListActions.OBJECTIONS_STORED,
               payload: { objections: result.json() }
             };
           })
