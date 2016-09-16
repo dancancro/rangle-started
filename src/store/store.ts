@@ -3,6 +3,7 @@ import { routerReducer } from 'ng2-redux-router';
 import * as counter from './counter';
 import * as session from './session';
 import * as list from './list';
+import { List } from 'immutable';
 
 
 export interface IAppState {
@@ -27,11 +28,19 @@ export function deimmutify(store) {
   };
 }
 
+// Get the data from local storage
 export function reimmutify(plain) {
   return {
     counter: counter.CounterFactory(plain.counter),
     session: session.SessionFactory(plain.session),
     router: plain.router,
     list: list.ListFactory(plain.list)
+      // .map(objection => list.ObjectionFactory(objection)
+      //           .update('rebuttals', 
+      //             (rebs) => List(rebs.map(
+      //                             (reb) =>  list.RebuttalFactory(reb))
+      //                           )
+      //                   )
+      //     )
   };
 }

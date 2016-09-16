@@ -104,7 +104,6 @@ console.log('[action: ' + action.type + '] [objection: ' + typeof objections + '
       return state.updateIn(['objections', objectionIndex, 'rebuttals'], () => rebuttals.delete(rebuttalIndex));
 
     case ListActions.REBUTTAL_SAVED:
-      let newRebuttal = action.payload.newRebuttal;
       return state.updateIn(['objections', objectionIndex, 'rebuttals', rebuttalIndex], () => RebuttalFactory().merge({
         id: action.payload.rebuttal.id,
         shortName: action.payload.newRebuttal.shortName.value, 
@@ -136,7 +135,7 @@ function expandAll(state: IListRecord, objections: List<IObjection>, action: IPa
 }
 
 function updateOneObjection(state: IListRecord, objectionIndex: number, fieldName: string, value: any): IListRecord {
-  return (<IListRecord>state).updateIn(['objections', objectionIndex, fieldName],() => value);
+  return (<IListRecord>state).updateIn(['objections', objectionIndex, fieldName], () => value);
 }
 
 function updateAllObjections(state: IListRecord, action: IPayloadAction, objections: List<IObjection>, fieldName: string, value: any): IListRecord {

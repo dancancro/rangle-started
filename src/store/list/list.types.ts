@@ -68,7 +68,7 @@ export interface IRebuttal {
   original?: IRebuttal;
 
   // methods
-  isTouched: Function
+  isTouched: Function;
 }
 
 export interface IRebuttalRecord extends TypedRecord<IRebuttalRecord>, IRebuttal {};

@@ -21,6 +21,8 @@ to replace [this project](http://www.bernierebuttals.org) made with JQuery and G
 | Type safety (Typescript)                                                       |    Y           |          Y         |       Y       |
 | Derived, computed attributes                                                   |    Y           |          Y         |               |
 | Update CLI parts                                                               |                |                    |       Y       |
+| Ahead of time compilation (Angular 2)                                          |    Y           |          Y         |       Y       |
+| Lazy loading (Angular 2)                                                       |    Y           |          Y         |       Y       |
 |                                                                                |                |                    |               |
 | User Experience                                                                |                |                    |               |
 | Editable lists                                                                 |    Y           |                    |               |

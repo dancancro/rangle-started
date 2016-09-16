@@ -55,7 +55,7 @@ export class BernieApp {
 //    middleware.push(createEpicMiddleware(this.listEpics.saveAll));
     middleware.push(createEpicMiddleware(
                       combineEpics(this.sessionEpics.login, 
-                                   // this.listEpics.saveAll
+                                    this.listEpics.saveAll
                                    )
                                    ));
 

@@ -25,14 +25,21 @@ export const RebuttalFactory = makeTypedFactory<IRebuttal, IRebuttalRecord>({
   }
 });
 
-// Do this to extend an entity
-export const NewRebuttalFactory = makeTypedFactory<IRebuttal, IRebuttalRecord>(RebuttalFactory().merge({
+export const NewRebuttalFactory = makeTypedFactory<IRebuttal, IRebuttalRecord>({
+  id: null,
+  shortName: '',
+  longName: '',
+  link: '',
+  comments: '',
   editing: true,
-  isTouched: function() { return true;}
-}));
+  original: null,
+  isTouched: function() { return true; }
+});
+
+export const INITIAL_REBUTTAL_STATE = RebuttalFactory();
 
 export const ObjectionFactory = makeTypedFactory<IObjection, IObjectionRecord>({
-  rebuttals: List<IRebuttal>(),
+  rebuttals: List<IRebuttal>(INITIAL_REBUTTAL_STATE),
   id: null,
   name: 'New Objection',
   rebuttalsReordered: false,
@@ -42,20 +49,17 @@ export const ObjectionFactory = makeTypedFactory<IObjection, IObjectionRecord>({
   }
 });
 
+export const INITIAL_OBJECTION_STATE = ObjectionFactory();
+
 export const ListFactory = makeTypedFactory<IList, IListRecord>({
-  objections: List<IObjection>(),
+  objections: List<IObjection>(INITIAL_OBJECTION_STATE),
   editable: false, 
   expanded: false,
   isTouched: function() {
     let _touched = false;
     // TODO make this a for loop with early exits
     this.objections.forEach(objection => {
-    let i = 0;
       objection.rebuttals.forEach(rebuttal => {
-        i++;
-        if (typeof rebuttal === 'undefined') {
-          console.log(objection.name + ' has an undefined rebuttal at position ' + i);
-        }
         if ( rebuttal.isTouched() ) {
           _touched = true;
         }
@@ -66,6 +70,4 @@ export const ListFactory = makeTypedFactory<IList, IListRecord>({
 
 });
 
-export const INITIAL_REBUTTAL_STATE = RebuttalFactory();
-export const INITIAL_OBJECTION_STATE = ObjectionFactory();
 export const INITIAL_LIST_STATE = ListFactory();
