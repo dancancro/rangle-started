@@ -11,7 +11,7 @@ This project aims to demonstrate features for users of the Rangle.io and Angular
 | Immutable data (Immutable)                                                     |       Y        |          Y         |               |
 | Immutable UI state (Immutable)                                                 |       Y        |                    |               |
 | Centralized actions and mutations                                              |       Y        |          Y         |               |
-| Asynchronously fetched, bound JSON data (RsJS + Angular 2 async pipe)          |       Y        |                    |               |
+| Asynchronously fetched, bound JSON data (RxJS + Angular 2 async pipe)          |       Y        |                    |               |
 | Hierarchical data                                                              |       Y        |                    |               |
 | Feature module with nested/coupled, logic-free components                      |       Y        |                    |               |
 | Reactive, nested form arrays (ng2-redux-form)                                  |    coming      |                    |               |
