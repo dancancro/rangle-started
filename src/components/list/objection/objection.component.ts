@@ -11,7 +11,6 @@ import { IRebuttal } from '../../../store/list/list.types';
 import { RebuttalComponent } from '../rebuttal/rebuttal.component';
 
 @Component({
-    moduleId: module.id,
     selector: 'list-objection',
     template: require('./objection.component.html'),
     styles: [require('./objection.component.css')],

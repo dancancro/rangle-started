@@ -24,7 +24,6 @@ import { ListActions } from '../actions';
 import { ListFactory } from '../store/list/list.initial-state';
 
 @Component({
-  moduleId: module.id,
   selector: 'app-list',
   template: require('./list.page.html'),
   styles: [require('./list.page.css')],

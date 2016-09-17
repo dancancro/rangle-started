@@ -23,64 +23,6 @@
                 "sortOrder": 2
             },
             {
-                "longName": "Bernie polls better against Trump and most Republicans than Clinton does. ",
-                "shortName": "Beats Trump better",
-                "id": 5,
-                "date": "2016-01-05T05:00:00.000Z",
-                "expires": "",
-                "link": "http://www.realclearpolitics.com/epolls/2016/president/us/general_election_trump_vs_sanders-5565.html",
-                "sortOrder": 2
-            },
-            {
-                "longName": "Republicans like Bernie a lot better than Hillary",
-                "shortName": "Repubs prefer Bernie",
-                "id": 6,
-                "date": "2016-01-05T05:00:00.000Z",
-                "expires": "",
-                "sortOrder": 2
-            },
-            {
-                "longName": "Bernie is doing amazingly well in spite of the media and DNC blackout of him and the fact the entire world has known Hillary for decades. When people know him they like him and if he gets the nomination the blackout will necessarily end, people will finally get to know him and he will really take off.",
-                "shortName": "Doing great given hurdles",
-                "id": 7,
-                "date": "2016-01-05T05:00:00.000Z",
-                "expires": "",
-                "sortOrder": 3
-            },
-            {
-                "longName": "Bernie has twice as many individual donors as Hillary Clinton",
-                "shortName": "2x donors",
-                "id": 8,
-                "date": "2016-01-05T05:00:00.000Z",
-                "expires": "",
-                "sortOrder": 3
-            },
-            {
-                "longName": "Lists of head to heads",
-                "shortName": "Head to heads",
-                "id": 13,
-                "date": "2016-01-08T05:00:00.000Z",
-                "expires": "",
-                "link": "http://bernievshillary.org/#/electability",
-                "sortOrder": 4
-            },
-            {
-                "longName": "Bernie cleans up with Independents over Clinton 59-21%, and 43% of voters are independent according to Gallup. This is the highest number dating back to 1988. He won 72% of independents in New Hampshire.",
-                "shortName": "Independents love Bernie",
-                "id": 10,
-                "date": "2016-01-05T05:00:00.000Z",
-                "expires": "",
-                "sortOrder": 4
-            },
-            {
-                "longName": "78% of Bernie’s supporters are enthusiastic, compared to only 39% for Clinton.",
-                "shortName": "78% enthusiastic",
-                "id": 11,
-                "date": "2016-01-05T05:00:00.000Z",
-                "expires": "",
-                "sortOrder": 4
-            },
-            {
                 "longName": "Hillary did not win in 2008. She is the same Hillary that people did not like back then.",
                 "shortName": "Hillary same as 2008",
                 "id": 15,
@@ -120,23 +62,6 @@
                 "expires": "",
                 "link": "https://www.washingtonpost.com/news/rampage/wp/2016/02/05/millennials-have-a-higher-opinion-of-socialism-than-of-capitalism/",
                 "sortOrder": 2
-            },
-            {
-                "longName": "HERE is a chart showing how well liked Bernie’s progressive issue stances are",
-                "shortName": "Bernie is this well liked",
-                "id": 102,
-                "date": "2016-01-05T05:00:00.000Z",
-                "expires": "",
-                "link": "http://s3.amazonaws.com/s3.boldprogressives.org/images/Big_Ideas-Polling_PDF-1.pdf",
-                "sortOrder": 3
-            },
-            {
-                "longName": "Voters are more interested in the integrity and authenticity of candidates than the specifics of any policies they espouse",
-                "shortName": "Integrity matters most",
-                "id": 103,
-                "date": "2016-01-05T05:00:00.000Z",
-                "expires": "",
-                "sortOrder": 4
             }
         ]
     },
@@ -170,74 +95,6 @@
                 "expires": "",
                 "link": "https://www.yahoo.com/news/energizer-bernie-does-sanders-keep-000000095.html?nhp=1",
                 "sortOrder": 1
-            },
-            {
-                "longName": "Nelson Mandela was 76, older than Bernie is, when he became president of South Africa. He served for 5 years and died at 95",
-                "shortName": "Mandela was 76",
-                "id": 206,
-                "date": "2016-03-27T04:00:00.000Z",
-                "expires": "",
-                "link": "https://en.wikipedia.org/wiki/Nelson_Mandela",
-                "sortOrder": 1
-            },
-            {
-                "longName": "Even if you knew Bernie was going to die the day after election day, it would still make sense to support him in the primary because his being on the ballot will bring voters to the polls who will vote obstructionist congressmen out of office. If Hillary is on the ballot these idealist voters and many independents will stay home.",
-                "shortName": "Voters show up for Bernie",
-                "id": 136,
-                "date": "2016-02-27T05:00:00.000Z",
-                "expires": "",
-                "sortOrder": 1
-            },
-            {
-                "longName": "Since the 60’s every POTUS has lived past 80",
-                "shortName": "POTUSes live past 80",
-                "id": 138,
-                "date": "2016-01-05T05:00:00.000Z",
-                "expires": "",
-                "sortOrder": 1
-            },
-            {
-                "longName": "Trump is 70 years old. If he is elected, he will be the oldest president ever elected.",
-                "shortName": "Trump is 70",
-                "id": 322,
-                "date": "2016-06-14T04:00:00.000Z",
-                "expires": "",
-                "sortOrder": 2
-            },
-            {
-                "longName": "Bernie is by far the most popular candidate from any party with Millennials",
-                "shortName": "Millenials love Bernie",
-                "id": 137,
-                "date": "2016-01-05T05:00:00.000Z",
-                "expires": "",
-                "sortOrder": 2
-            },
-            {
-                "longName": "14 Large corporation CEOs over 75",
-                "shortName": "Old CEOs",
-                "id": 362,
-                "date": "2010-06-21T04:00:00.000Z",
-                "expires": "",
-                "link": "http://www.theatlantic.com/business/archive/2010/06/the-14-oldest-ceos-in-america-how-much-they-make/58375/#slide5",
-                "sortOrder": 2
-            },
-            {
-                "longName": "Bernie polls better against Trump and most Republicans than Clinton does. ",
-                "shortName": "Beats Trump better",
-                "id": 5,
-                "date": "2016-01-05T05:00:00.000Z",
-                "expires": "",
-                "link": "http://www.realclearpolitics.com/epolls/2016/president/us/general_election_trump_vs_sanders-5565.html",
-                "sortOrder": 3
-            },
-            {
-                "longName": "Bernie is able to conduct a successful campaign against all odds and also do his job voting in Congress. Young, spry Marco Rubio can't do that.",
-                "shortName": "Youthfuller than Rubio",
-                "id": 139,
-                "date": "2016-01-05T05:00:00.000Z",
-                "expires": "",
-                "link": "https://www.govtrack.us/congress/members/marco_rubio/412491",
-                "sortOrder": 3
             },
             {
                 "longName": "He’s younger than three of the eight Supreme Court justices.",

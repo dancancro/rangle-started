@@ -5,7 +5,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IList, IObjection, IRebuttal } from '../../../store/list/list.types';
 
 @Component({
-    moduleId: module.id,
     selector: 'list-rebuttal',
     template: require('./rebuttal.component.html'),
     styles: [require('./rebuttal.component.css')],
