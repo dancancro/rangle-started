@@ -3,6 +3,8 @@ to replace [this project](http://www.bernierebuttals.org) made with JQuery and G
 
 This project aims to demonstrate features for users of the Rangle.io and Angular-CLI starters which will hopefully someday be the same.
 
+Click [here](https://bernierebuttals.herokuapp.com) for a demo. Use admin/superuser to log in
+
 
 
 | Demonstrations and Features                                                    |   This one     |    [Rangle-starter](https://www.npmjs.com/package/rangle-starter)  |  [Angular-CLI](https://github.com/angular/angular-cli)

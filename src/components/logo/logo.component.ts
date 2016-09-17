@@ -8,11 +8,12 @@ import { Component } from '@angular/core';
       <img
         class="logo"
         [src]="LogoImage"
-        alt="Rangle.io"
+        alt="Bernie Rebuttals"
       />
     </div>
   `
 })
 export class RioLogo {
-  private LogoImage = require('../../assets/rangleio-logo.svg');
+  private LogoImage = '../../assets/bernie-sanders-128.jpg';
+//  private LogoImage = require('../../assets/bernie-sanders-128.jpg');  // need a jpg loader for this
 };
