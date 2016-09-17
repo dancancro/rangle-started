@@ -10,11 +10,11 @@ import { ICounter } from '../store';
   selector: 'counter-page',
   providers: [ CounterActions ],
   template: `
-    <rio-container testid="counter" [size]=2 [center]=true><p><p><p><p><p><p><p>
+    <rio-container testid="counter" [size]=2 [center]=true>
       <h2 data-testid="counter-heading" id="qa-counter-heading"
         class="center caps">
         Counter
-      </h2>>
+      </h2>
 
       <rio-counter
         [counter]="counter$ | async"
