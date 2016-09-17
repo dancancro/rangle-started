@@ -103,6 +103,7 @@ const baseConfig = {
       loaders.ts,
       loaders.html,
       loaders.css,
+      { test: /\.jpg$/, loader: "file-loader" },
       loaders.svg,
       loaders.eot,
       loaders.woff,

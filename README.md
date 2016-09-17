@@ -33,11 +33,12 @@ Click [here](https://bernierebuttals.herokuapp.com) for a demo. Use admin/superu
 | Testing                                                                        |    coming      |          Y         |       Y       |
 |                                                                                |                |                    |               |
 | **User Experience**                                                            |                |                    |               |
-| Editable lists                                                                 |       Y        |                    |               |
 | Local storage (redux-localstorage)                                             |       Y        |          Y         |               |
 | Validation (Angular 2 Forms)                                                   |       Y        |          Y         |               |
 | Authentication (rangle-starter + Passport)                                     |       Y        |          Y         |               |
 | Responsive styling (basscss)                                                   |       Y        |          Y         |               |
+| Editable lists                                                                 |       Y        |                    |               |
+| JPEG images                                                                    |       Y        |                    |               |       
 | Drag and drop (react-dnd?)                                                     |    coming      |                    |               |
 | Autocomplete (?)                                                               |    coming      |                    |               |
 | Undo (redux-undo)                                                              |    coming      |                    |               |       
