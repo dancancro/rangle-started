@@ -49,5 +49,8 @@ git merge source_branch
 // discard all unstaged changes in the current branch
 git checkout -- .
 
+// deploy to Heroku
+go into your heroku app's 'config' tab (if using the heroku dashboard) and set the NPM_CONFIG_PRODUCTION env var to false
+
 // write an npm dependency on a specific GitHub tag like this
     "@angular/common": "angular/angular#2.0.0"

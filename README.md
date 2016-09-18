@@ -1,5 +1,7 @@
 A project made from [rangle-starter](https://www.npmjs.com/package/rangle-starter) 
-to replace [this project](http://www.bernierebuttals.org) made with JQuery and Google Scripts
+to replace [this project](http://www.bernierebuttals.org) made with JQuery and Google Scripts. The data is 
+contained in [this Google Sheet](https://docs.google.com/spreadsheets/d/1RdIhMdNCRJ-xtl6IgbT2SdChtLIYW8VXeloq7rR1lqY/edit#gid=50602236) 
+and served as JSON by a Google script.
 
 This project aims to demonstrate features for users of the Rangle.io and Angular-CLI starters which will hopefully someday be the same.
 
@@ -13,7 +15,7 @@ Click [here](https://bernierebuttals.herokuapp.com) for a demo. Use admin/superu
 | Immutable data (Immutable)                                                     |       Y        |          Y         |               |
 | Immutable UI state (Immutable)                                                 |       Y        |                    |               |
 | Centralized actions and mutations                                              |       Y        |          Y         |               |
-| Asynchronously fetched, bound JSON data (RxJS + Angular 2 async pipe)          |       Y        |                    |               |
+| Async bound JSON data (RxJS + Angular 2 async pipe)                            |       Y        |                    |               |
 | Hierarchical data                                                              |       Y        |                    |               |
 | Feature module with nested/coupled, logic-free components                      |       Y        |                    |               |
 | Reactive, nested form arrays (ng2-redux-form)                                  |    coming      |                    |               |
