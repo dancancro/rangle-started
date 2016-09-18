@@ -22,7 +22,7 @@ export class ListEpics {
     private route: ActivatedRoute, 
     private dataService: DataService) {}
 
-  saveAll = (action$: ActionsObservable) => {
+  saveAll = (action$: ActionsObservable<IPayloadAction>) => {
     return action$.ofType(ListActions.ALL_SAVED)
       .mergeMap((action) => {
         return this.dataService.saveObjections(action.payload.oldObjections, action.payload.newObjections)

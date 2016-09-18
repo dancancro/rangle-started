@@ -27,10 +27,13 @@ console.log('in the reducer ' + action.type);
   // if i don't do this then these lookups will have to go in several functions'
   let objections = (<IListRecord>state).get('objections');
 
-console.log('[action: ' + action.type + '] [objection: ' + typeof objections + '] [getIn:  ' + typeof objections.getIn + ']' );
-
-  let objectionIndex = action.payload && action.payload.objection 
-        ? findObjectionIndex(objections, action.payload.objection.id) 
+ console.log('[action: ' + action.type + '] [objection: ' + typeof objections + '] [getIn:  ' + typeof objections.getIn + ']' );
+  
+  let objection = action.payload 
+        ? action.payload.objection 
+        : undefined;
+  let objectionId = action.payload 
+        ? action.payload.objectionId
         : undefined;
   if (objectionId) {
     objection = objections.find(o => o.id === objectionId);
