@@ -19,7 +19,7 @@ export class ListActions {
   static ALL_EXPANDED = 'ALL_EXPANDED';
   static ALL_COLLAPSED = 'ALL_COLLAPSED';
   static EDITABLE_TOGGLED = 'EDITABLE_TOGGLED';
-  static DATA_SAVED = 'DATA_SAVED';
+  static ALL_SAVED = 'ALL_SAVED';
   static DATA_GOTTEN = 'DATA_GOTTEN';
   static SEEK_OBJECTION = 'SEEK_OBJECTION';
 
@@ -35,9 +35,7 @@ export class ListActions {
   static REBUTTAL_SAVED = 'REBUTTAL_SAVED';
   static REBUTTAL_MADE_EDITABLE = 'REBUTTAL_MADE_EDITABLE';
 
-  constructor(
-    private ngRedux: NgRedux<IAppState>,
-    private dataService: DataService) { }
+  constructor(private ngRedux: NgRedux<IAppState>) { }
   _oldObjections = [];  // TODO: This should probably go somewhere else
 
 // List Actions
@@ -89,9 +87,9 @@ export class ListActions {
   // TODO: This currently compares the original objections set to the current one. 
   // If this supports observed additions that could be edited, then we'd want to
   // compare the changes with whatever was served to the page not just the original ones.
-  saveData() {
+  saveAll() {
       this.ngRedux.dispatch({
-        type: ListActions.DATA_SAVED,
+        type: ListActions.ALL_SAVED,
         payload: {
           oldObjections: this._oldObjections,
           newObjections: this.ngRedux.getState().list.objections}

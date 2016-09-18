@@ -2,6 +2,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
@@ -9,7 +10,6 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/observable/zip';
 
-import { Observable } from 'rxjs/Observable';
 import { ActionsObservable } from 'redux-observable';
 import { UPDATE_LOCATION } from 'ng2-redux-router'; 
 
@@ -22,8 +22,8 @@ export class ListEpics {
     private route: ActivatedRoute, 
     private dataService: DataService) {}
 
-  saveData = (action$: ActionsObservable<IPayloadAction>) => {
-    return action$.ofType(ListActions.DATA_SAVED)
+  saveAll = (action$: ActionsObservable) => {
+    return action$.ofType(ListActions.ALL_SAVED)
       .mergeMap((action) => {
         return this.dataService.saveObjections(action.payload.oldObjections, action.payload.newObjections)
           .map(result => {
@@ -71,7 +71,7 @@ export class ListEpics {
               }
               return Observable.of(outActions);  // I don't think making it an Observable is necessary
             }
-          )    
+          )
           .catch(error => {
             console.log(error);
             return Observable.of({

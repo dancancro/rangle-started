@@ -79,7 +79,7 @@ console.log('[action: ' + action.type + '] [objection: ' + typeof objections + '
       return updateListField(state, action, 'editable', !state.get('editable'));
       // this.options.disabled = !this.options.disabled;   // draggabilitty
 
-    case ListActions.DATA_SAVED:
+    case ListActions.ALL_SAVED:
      // TODO
      return state;
 
