@@ -95,6 +95,7 @@ const baseConfig = {
   },
 
   module: {
+    exprContextCritical: false,    // TODO: remove this when this is handled https://github.com/AngularClass/angular2-webpack-starter/issues/993
     preLoaders: [
       loaders.tslint,
     ],
@@ -102,6 +103,7 @@ const baseConfig = {
       loaders.ts,
       loaders.html,
       loaders.css,
+      { test: /\.jpg$/, loader: "file-loader" },
       loaders.svg,
       loaders.eot,
       loaders.woff,

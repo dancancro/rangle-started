@@ -26,11 +26,11 @@ console.log('in the reducer ' + action.type);
   // is it bad to have member state variables in an action creator? does that make the functions not pure?
   // if i don't do this then these lookups will have to go in several functions'
   let objections = (<IListRecord>state).get('objections');
-  let objection = action.payload 
-        ? action.payload.objection 
-        : undefined;
-  let objectionId = action.payload 
-        ? action.payload.objectionId
+
+console.log('[action: ' + action.type + '] [objection: ' + typeof objections + '] [getIn:  ' + typeof objections.getIn + ']' );
+
+  let objectionIndex = action.payload && action.payload.objection 
+        ? findObjectionIndex(objections, action.payload.objection.id) 
         : undefined;
   if (objectionId) {
     objection = objections.find(o => o.id === objectionId);
@@ -54,12 +54,13 @@ console.log('in the reducer ' + action.type);
 
     // List actions
 
-    case ListActions.OBJECTIONS_FETCHED_OK:
-      return INITIAL_LIST_STATE.merge(
+    case ListActions.OBJECTIONS_STORED:
+      return state.merge(
           {
             // Make an IObjection out of every POJO objection. Then replace each one's array of POJO rebuttals with a List of IRebuttals'
             objections: List([...action.payload.objections]
-                              .map(o => ObjectionFactory(o).update('rebuttals', (rebs) => List(rebs.map((reb) => RebuttalFactory(reb))))))
+                              .map(objection => ObjectionFactory(objection).update('rebuttals', (rebs) => List(rebs.map((reb) => 
+                                RebuttalFactory(reb))))))
           });
 
     case ListActions.OBJECTION_ADDED:
@@ -115,20 +116,13 @@ console.log('in the reducer ' + action.type);
       return state.updateIn(['objections', objectionIndex, 'rebuttals'], () => rebuttals.delete(rebuttalIndex));
 
     case ListActions.REBUTTAL_SAVED:
-      let newRebuttal = action.payload.newRebuttal;
-      let touched = 
-        newRebuttal.shortName.value !== rebuttal.shortName ||
-        newRebuttal.longName.value !== rebuttal.longName ||
-        newRebuttal.link.value !== rebuttal.link ||
-        (newRebuttal.comments.value || '') !== (rebuttal.comments || '');
-      return state.updateIn(['objections', objectionIndex, 'rebuttals', rebuttalIndex], () => RebuttalFactory({
+      return state.updateIn(['objections', objectionIndex, 'rebuttals', rebuttalIndex], () => RebuttalFactory().merge({
         id: action.payload.rebuttal.id,
         shortName: action.payload.newRebuttal.shortName.value, 
         longName: action.payload.newRebuttal.longName.value,
         link: action.payload.newRebuttal.link.value,
         comments: action.payload.newRebuttal.comments.value,
-        touched: touched,
-        editing: false})
+        original: rebuttal.original || rebuttal })
       );
     
     case ListActions.REBUTTAL_MADE_EDITABLE:
@@ -153,9 +147,7 @@ function expandAll(state: IListRecord, objections: List<IObjection>, action: IPa
 }
 
 function updateOneObjection(state: IListRecord, objectionIndex: number, fieldName: string, value: any): IListRecord {
-  return (<IListRecord>state).updateIn(['objections', objectionIndex],
-         (objection: IObjectionRecord) => objection.update(fieldName, () => value)
-        );
+  return (<IListRecord>state).updateIn(['objections', objectionIndex, fieldName], () => value);
 }
 
 function updateAllObjections(state: IListRecord, action: IPayloadAction, objections: List<IObjection>, fieldName: string, value: any): IListRecord {

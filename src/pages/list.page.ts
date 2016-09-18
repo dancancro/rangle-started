@@ -20,7 +20,6 @@ import { ListActions } from '../actions';
 import { ListFactory } from '../store/list/list.initial-state';
 
 @Component({
-  moduleId: module.id,
   selector: 'app-list',
   template: require('./list.page.html'),
   styles: [require('./list.page.css')],
@@ -54,6 +53,9 @@ export class ListPage implements OnInit, OnChanges {
         this.route.params.subscribe(
           (params) => console.log('route.params in list.page:::: ' + params['objectionId'])
         );
-     this.listActions.getData();
+    this.subscription = this.dataService.getObjections().subscribe({
+        next: (objections) => this.listActions.storeObjections(objections),
+        error: (err) => this.listActions.error(err)
+      });
   }
 }

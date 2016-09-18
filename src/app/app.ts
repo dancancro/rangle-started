@@ -55,8 +55,8 @@ export class BernieApp {
 // That is more explicit, I think too which I've heard recommended.
     middleware.push(createEpicMiddleware(
                       combineEpics(this.sessionEpics.login, 
-                                   this.listEpics.saveData,
-                                   this.listEpics.getData)
+                                    this.listEpics.saveAll
+                                   )
                                    ));
 
     ngRedux.configureStore(rootReducer, {}, middleware, enhancers);

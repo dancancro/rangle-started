@@ -10,7 +10,7 @@
              <br>{{objection.imageLabel}}
         </div><br>
         <ul class="container" [sortablejs]="objection.rebuttals" [sortablejsOptions]="options" (update)="reorderObjections.emit()">
-          <li *ngFor="let rebuttal of objection.rebuttals" [ngClass]="{touched: rebuttal.touched}">
+          <li *ngFor="let rebuttal of objection.rebuttals" [ngClass]="{touched: rebuttal.isTouched()}">
             <list-rebuttal 
               [list]="list"
               [objection]="objection"

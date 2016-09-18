@@ -14,29 +14,34 @@
         class="text-decoration-none">Counter</a>
     </rio-navigator-item>
 
-    <rio-navigator-item *ngIf="loggedIn$ | async">
+    <rio-navigator-item *ngIf="loggedIn$ | async" [mr]=true>
       <a [routerLink]="['/about']"
         class="text-decoration-none">About Us</a>
     </rio-navigator-item>
 
-    <rio-navigator-item *ngIf="loggedIn$ | async">
+    <rio-navigator-item *ngIf="loggedIn$ | async" [mr]=true>
       <a [routerLink]="['/list/1']"
         class="text-decoration-none">1</a>
     </rio-navigator-item>
 
-    <rio-navigator-item *ngIf="loggedIn$ | async">
+    <rio-navigator-item *ngIf="loggedIn$ | async" [mr]=true>
       <a [routerLink]="['/list/3']"
         class="text-decoration-none">3</a>
     </rio-navigator-item>
 
-    <rio-navigator-item *ngIf="loggedIn$ | async">
+    <rio-navigator-item *ngIf="loggedIn$ | async" [mr]=true>
       <a [routerLink]="['/list/5']"
         class="text-decoration-none">5</a>
     </rio-navigator-item>
 
-    <rio-navigator-item *ngIf="loggedIn$ | async">
+    <rio-navigator-item *ngIf="loggedIn$ | async" [mr]=true>
       <a [routerLink]="['/list']"
         class="text-decoration-none">All Objections</a>
+    </rio-navigator-item>
+
+    <rio-navigator-item *ngIf="loggedIn$ | async" [mr]=true>
+      <a href="https://github.com/dancancro/rangle-started"
+        class="text-decoration-none">GitHub Repository</a>
     </rio-navigator-item>
 
     <div class="flex flex-auto"></div>
@@ -50,7 +55,7 @@
         Logout
       </rio-button>
     </rio-navigator-item>
-  </rio-navigator>
+  </rio-navigator>.<br><br><br><br><br>
   <main>
     <router-outlet></router-outlet>
   </main>

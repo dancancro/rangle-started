@@ -14,7 +14,7 @@ import { ICounter } from '../store';
       <h2 data-testid="counter-heading" id="qa-counter-heading"
         class="center caps">
         Counter
-      </h2>>
+      </h2>
 
       <rio-counter
         [counter]="counter$ | async"

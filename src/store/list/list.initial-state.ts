@@ -15,8 +15,14 @@ export const RebuttalFactory = makeTypedFactory<IRebuttal, IRebuttalRecord>({
   longName: '',
   link: '',
   comments: '',
-  touched: false,
-  editing: false
+  editing: false,
+  original: null,
+  isTouched: function() {
+    return this.original && (this.original.shortName !== this.shortName ||
+      this.original.longName !== this.longName ||
+      this.original.link !== this.link ||
+      (this.original.comments || '') !== (this.comments || ''));
+  }
 });
 
 export const NewRebuttalFactory = makeTypedFactory<IRebuttal, IRebuttalRecord>({
@@ -24,12 +30,16 @@ export const NewRebuttalFactory = makeTypedFactory<IRebuttal, IRebuttalRecord>({
   shortName: '',
   longName: '',
   link: '',
-  touched: false,
-  editing: true     // this is true for a Rebuttal you add
+  comments: '',
+  editing: true,
+  original: null,
+  isTouched: function() { return true; }
 });
 
+export const INITIAL_REBUTTAL_STATE = RebuttalFactory();
+
 export const ObjectionFactory = makeTypedFactory<IObjection, IObjectionRecord>({
-  rebuttals: List<IRebuttal>(),
+  rebuttals: List<IRebuttal>(INITIAL_REBUTTAL_STATE),
   id: null,
   name: 'New Objection',
   rebuttalsReordered: false,
@@ -39,8 +49,10 @@ export const ObjectionFactory = makeTypedFactory<IObjection, IObjectionRecord>({
   }
 });
 
+export const INITIAL_OBJECTION_STATE = ObjectionFactory();
+
 export const ListFactory = makeTypedFactory<IList, IListRecord>({
-  objections: List<IObjection>(),
+  objections: List<IObjection>(INITIAL_OBJECTION_STATE),
   editable: false, 
   expanded: false,
   scrollY: 0,
@@ -48,13 +60,8 @@ export const ListFactory = makeTypedFactory<IList, IListRecord>({
     let _touched = false;
     // TODO make this a for loop with early exits
     this.objections.forEach(objection => {
-    let i = 0;
       objection.rebuttals.forEach(rebuttal => {
-        i++;
-        if (typeof rebuttal === 'undefined') {
-          console.log(objection.name + ' has an undefined rebuttal at position ' + i);
-        }
-        if ( rebuttal.touched ) {
+        if ( rebuttal.isTouched() ) {
           _touched = true;
         }
       });
@@ -64,6 +71,4 @@ export const ListFactory = makeTypedFactory<IList, IListRecord>({
 
 });
 
-export const INITIAL_REBUTTAL_STATE = RebuttalFactory();
-export const INITIAL_OBJECTION_STATE = ObjectionFactory();
 export const INITIAL_LIST_STATE = ListFactory();

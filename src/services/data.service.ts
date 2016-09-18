@@ -31,10 +31,6 @@ export class DataService {
                 }); // transforms it into an observable of IObjections
     }
 
-    static getOriginalRebuttal(oldObjections, objectionId, rebuttalId) {
-        return oldObjections.filter((objection) => objection.id === objectionId)[0].rebuttals.filter((rebuttal) => rebuttal.id === rebuttalId)[0];
-    }
-
     static getOrderings(oldObjections, newObjections) {
         return newObjections.filter(objection => objection.rebuttalsReordered)
             .map(objection => {
@@ -50,13 +46,12 @@ export class DataService {
     static getEdits(oldObjections, newObjections) {
         let edits = [];
         newObjections.forEach(objection =>
-            objection.rebuttals.filter(rebuttal => rebuttal.touched && rebuttal.id)
+            objection.rebuttals.filter(rebuttal => rebuttal.isTouched() && rebuttal.id)
             .forEach(rebuttal => {
-                let originalRebuttal = DataService.getOriginalRebuttal(oldObjections, objection.id, rebuttal.id);
                 let edit = { rebuttalId: rebuttal.id };
-                if ( originalRebuttal.shortName !== rebuttal.shortName ) { edit['shortName'] = rebuttal.shortName; }
-                if ( originalRebuttal.longName !== rebuttal.longName ) { edit['longName'] = rebuttal.longName; }
-                if ( originalRebuttal.link !== rebuttal.link ) { edit['link'] = rebuttal.link; }
+                if ( rebuttal.original.shortName !== rebuttal.shortName ) { edit['shortName'] = rebuttal.shortName; }
+                if ( rebuttal.original.longName !== rebuttal.longName ) { edit['longName'] = rebuttal.longName; }
+                if ( rebuttal.original.link !== rebuttal.link ) { edit['link'] = rebuttal.link; }
                 if ( rebuttal.comments !== '' ) { edit['comments'] = rebuttal.comments; }
                 edits.push(edit);
             })
