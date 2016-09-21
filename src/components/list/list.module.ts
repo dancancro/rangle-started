@@ -7,7 +7,7 @@ import { ObjectionComponent } from './objection/objection.component';
 import { RebuttalComponent } from './rebuttal/rebuttal.component';
 import { SORTABLEJS_DIRECTIVES } from 'angular-sortablejs';
 import { DataService } from '../../services/data.service';
-
+import { RouteParamsService } from '../../services/route-params.service';
 import { AsyncPipe } from '@angular/common';
 
 @NgModule({
@@ -28,7 +28,8 @@ import { AsyncPipe } from '@angular/common';
     BrowserModule
   ],
   providers: [
-    DataService
+    DataService,
+    RouteParamsService
   ]
 })
 export class ListModule { }

@@ -15,36 +15,38 @@ import { UPDATE_LOCATION } from 'ng2-redux-router';
 
 import { IPayloadAction, ListActions } from '../actions';
 import { DataService } from '../services/data.service';
+import { RouteParamsService } from '../services/route-params.service';
 
 @Injectable()
 export class ListEpics {
   constructor(
     private route: ActivatedRoute, 
-    private dataService: DataService) {}
+    private dataService: DataService,
+    private routeParamsService: RouteParamsService) {}
 
   saveAll = (action$: ActionsObservable<IPayloadAction>) => {
-    return action$.ofType(ListActions.ALL_SAVED)
+    return action$.ofType(ListActions.SAVE_ALL)
       .mergeMap((action) => {
         return this.dataService.saveObjections(action.payload.oldObjections, action.payload.newObjections)
           .map(result => {
             alert('Thank you! We have received your change suggestions ' 
             + 'and will review them for inclusion in the resource.');
             return {
-              type: ListActions.OBJECTIONS_STORED,
+              type: ListActions.STORE_OBJECTIONS,
               payload: { objections: result.json() }
             };
           })
           .catch(error => {
             console.log(error);
             return Observable.of({
-              type: ListActions.OBJECTIONS_FETCHED_ERROR
+              type: ListActions.FETCH_OBJECTIONS_ERROR
             });
           });
      });
   }
 
   getData = (action$: ActionsObservable<IPayloadAction>) => {
-    return action$.ofType(ListActions.DATA_GOTTEN, UPDATE_LOCATION)
+    return action$.ofType(ListActions.GET_DATA, UPDATE_LOCATION)
       .mergeMap((action) => {
 
         // combined subscription of route.params and dataService.getObjections()
@@ -52,11 +54,12 @@ export class ListEpics {
           this.route.params,
           this.dataService.getObjections(),
           (params, objections) => {
-              debugger;
-              let objectionId: number = params['objectionId'];
+//              console.log('route.params in list.epics.getData:::: ' + params['objectionId']);
+               debugger;
+              let objectionId: number = 3;//this.routeParamsService['objectionId'];
               let outActions: Array<any> = [];
               outActions.push( {
-                type: ListActions.OBJECTIONS_FETCHED_OK,
+                type: ListActions.STORE_OBJECTIONS,
                 payload: { objections: objections }
               });
               if (objectionId !== undefined) {
@@ -65,7 +68,7 @@ export class ListEpics {
                   payload: { objectionId: objectionId }
                 });
                 outActions.push({
-                  type: ListActions.OBJECTION_EXPANDED,
+                  type: ListActions.EXPAND_OBJECTION,
                   payload: { objectionId: objectionId }
                 });
               }
@@ -75,7 +78,7 @@ export class ListEpics {
           .catch(error => {
             console.log(error);
             return Observable.of({
-              type: ListActions.OBJECTIONS_FETCHED_ERROR
+              type: ListActions.FETCH_OBJECTIONS_ERROR
             });
           });
         }

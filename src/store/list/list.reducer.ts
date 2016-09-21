@@ -27,8 +27,8 @@ console.log('in the reducer ' + action.type);
   // if i don't do this then these lookups will have to go in several functions'
   let objections = (<IListRecord>state).get('objections');
 
- console.log('[action: ' + action.type + '] [objection: ' + typeof objections + '] [getIn:  ' + typeof objections.getIn + ']' );
-  
+ // console.log('[action: ' + action.type + '] [objection: ' + typeof objections + '] [getIn:  ' + typeof objections.getIn + ']' );
+
   let objection = action.payload 
         ? action.payload.objection 
         : undefined;
@@ -56,33 +56,37 @@ console.log('in the reducer ' + action.type);
   switch (action.type) {
 
     // List actions
+    case UPDATE_LOCATION:
+       return state;
 
-    case ListActions.OBJECTIONS_STORED:
+    case ListActions.STORE_OBJECTIONS:
       return state.merge(
           {
             // Make an IObjection out of every POJO objection. Then replace each one's array of POJO rebuttals with a List of IRebuttals'
+            // objections: List([...action.payload.objections]
+            //                   .map(o => ObjectionFactory(o).update('rebuttals', (rebs) => List(rebs.map((reb) => 
+            //                     RebuttalFactory(reb))))))
             objections: List([...action.payload.objections]
-                              .map(objection => ObjectionFactory(objection).update('rebuttals', (rebs) => List(rebs.map((reb) => 
-                                RebuttalFactory(reb))))))
+                              .map(o => ObjectionFactory(o)))
           });
 
-    case ListActions.OBJECTION_ADDED:
+    case ListActions.ADD_OBJECTION:
       return state.update('objections', (obs) => obs.push(ObjectionFactory()));
 
-    case ListActions.OBJECTIONS_REORDERED:
+    case ListActions.REORDER_OBJECTIONS:
       return state;
 
-    case ListActions.ALL_EXPANDED:
+    case ListActions.EXPAND_ALL:
       return expandAll(state, objections, action, true);
 
-    case ListActions.ALL_COLLAPSED:
+    case ListActions.COLLAPSE_ALL:
       return expandAll(state, objections, action, false);
 
-    case ListActions.EDITABLE_TOGGLED:
+    case ListActions.TOGGLE_EDITABLE:
       return updateListField(state, action, 'editable', !state.get('editable'));
       // this.options.disabled = !this.options.disabled;   // draggabilitty
 
-    case ListActions.ALL_SAVED:
+    case ListActions.SAVE_ALL:
      // TODO
      return state;
 
@@ -94,31 +98,31 @@ console.log('in the reducer ' + action.type);
       
     // Objection actions
 
-    case ListActions.REBUTTAL_ADDED:
+    case ListActions.ADD_REBUTTAL:
       return state.updateIn(['objections', objectionIndex, 'rebuttals'],   
                              (rebs: List<IRebuttal>) => rebs.push(NewRebuttalFactory()));
       
-    case ListActions.OBJECTION_STARRED:
+    case ListActions.STAR_OBJECTION:
       return updateOneObjection(state, objectionIndex, 'star', true);
 
-    case ListActions.OBJECTION_EXPANDED:
+    case ListActions.EXPAND_OBJECTION:
       return updateOneObjection(state, objectionIndex, 'expanded', true);
 
-    case ListActions.OBJECTION_COLLAPSED:
+    case ListActions.COLLAPSE_OBJECTION:
       return updateOneObjection(state, objectionIndex, 'expanded', false);
 
-    case ListActions.REBUTTALS_REORDERED:
+    case ListActions.REORDER_REBUTTALS:
       return updateOneObjection(state, objectionIndex, 'rebuttalsReordered', true);
 
     // Rebuttal actions
 
-    case ListActions.REBUTTAL_CANCELED:
+    case ListActions.CANCEL_REBUTTAL:
       if ( rebuttal.id ) {
         return updateRebuttalField(state, rebuttalIndex, objectionIndex, 'editing', false);
       }
       return state.updateIn(['objections', objectionIndex, 'rebuttals'], () => rebuttals.delete(rebuttalIndex));
 
-    case ListActions.REBUTTAL_SAVED:
+    case ListActions.SAVE_REBUTTAL:
       return state.updateIn(['objections', objectionIndex, 'rebuttals', rebuttalIndex], () => RebuttalFactory().merge({
         id: action.payload.rebuttal.id,
         shortName: action.payload.newRebuttal.shortName.value, 
@@ -128,7 +132,7 @@ console.log('in the reducer ' + action.type);
         original: rebuttal.original || rebuttal })
       );
     
-    case ListActions.REBUTTAL_MADE_EDITABLE:
+    case ListActions.MAKE_REBUTTAL_EDITABLE:
       return updateRebuttalField(state, rebuttalIndex, objectionIndex, 'editing', true);
       
     default:

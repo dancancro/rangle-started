@@ -5,7 +5,10 @@ and served as JSON by a Google script.
 
 This project aims to demonstrate features for users of the Rangle.io and Angular-CLI starters which will hopefully someday be the same.
 
-Click [here](https://bernierebuttals.herokuapp.com) for a demo. Use admin/superuser to log in
+Click [here](https://bernierebuttals.herokuapp.com) for a demo. Use admin/superuser to log in.
+
+Some more examples that I found helpful:
+- [React + Redux](https://react-redux.herokuapp.com/)
 
 
 
@@ -42,5 +45,5 @@ Click [here](https://bernierebuttals.herokuapp.com) for a demo. Use admin/superu
 | Editable lists                                                                 |       Y        |                    |               |
 | JPEG images                                                                    |       Y        |                    |               |       
 | Drag and drop (react-dnd?)                                                     |    coming      |                    |               |
-| Autocomplete (?)                                                               |    coming      |                    |               |
+| [Autocomplete (?)](https://egghead.io/lessons/angular-2-building-an-instant-search-with-angular-2-consuming-events-as-observables?course=build-an-angular-2-instant-search-component)                                                               |    coming      |                    |               |
 | Undo (redux-undo)                                                              |    coming      |                    |               |       

@@ -12,28 +12,28 @@ import { DataService } from '../services/data.service';
 export class ListActions {
   // List actions
 //  static OBJECTIONS_FETCHED_OK = 'OBJECTIONS_FETCHED_OK';
-  static OBJECTIONS_FETCHED_ERROR = 'OBJECTIONS_FETCHED_ERROR';
-  static OBJECTION_ADDED = 'OBJECTION_ADDED';
-  static OBJECTIONS_STORED = 'OBJECTIONS_STORED';
-  static OBJECTIONS_REORDERED = 'OBJECTIONS_REORDERED';
-  static ALL_EXPANDED = 'ALL_EXPANDED';
-  static ALL_COLLAPSED = 'ALL_COLLAPSED';
-  static EDITABLE_TOGGLED = 'EDITABLE_TOGGLED';
-  static ALL_SAVED = 'ALL_SAVED';
-  static DATA_GOTTEN = 'DATA_GOTTEN';
+  static FETCH_OBJECTIONS_ERROR = 'FETCH_OBJECTIONS_ERROR';
+  static ADD_OBJECTION = 'ADD_OBJECTION';
+  static STORE_OBJECTIONS = 'STORE_OBJECTIONS';
+  static REORDER_OBJECTIONS = 'REORDER_OBJECTIONS';
+  static EXPAND_ALL = 'EXPAND_ALL';
+  static COLLAPSE_ALL = 'COLLAPSE_ALL';
+  static TOGGLE_EDITABLE = 'TOGGLE_EDITABLE';
+  static SAVE_ALL = 'SAVE_ALL';
+  static GET_DATA = 'GET_DATA';
   static SEEK_OBJECTION = 'SEEK_OBJECTION';
 
   // Objection actions
-  static REBUTTAL_ADDED = 'REBUTTAL_ADDED';
-  static OBJECTION_STARRED = 'OBJECTION_STARRED';
-  static OBJECTION_EXPANDED = 'OBJECTION_EXPANDED';
-  static OBJECTION_COLLAPSED = 'OBJECTION_COLLAPSED';
-  static REBUTTALS_REORDERED = 'REBUTTALS_REORDERED';
+  static ADD_REBUTTAL = 'ADD_REBUTTAL';
+  static STAR_OBJECTION = 'STAR_OBJECTION';
+  static EXPAND_OBJECTION = 'EXPAND_OBJECTION';
+  static COLLAPSE_OBJECTION = 'COLLAPSE_OBJECTION';
+  static REORDER_REBUTTALS = 'REORDER_REBUTTALS';
 
   // Rebuttal actions
-  static REBUTTAL_CANCELED = 'REBUTTAL_CANCELED';
-  static REBUTTAL_SAVED = 'REBUTTAL_SAVED';
-  static REBUTTAL_MADE_EDITABLE = 'REBUTTAL_MADE_EDITABLE';
+  static CANCEL_REBUTTAL = 'CANCEL_REBUTTAL';
+  static SAVE_REBUTTAL = 'SAVE_REBUTTAL';
+  static MAKE_REBUTTAL_EDITABLE = 'MAKE_REBUTTAL_EDITABLE';
 
   constructor(private ngRedux: NgRedux<IAppState>) { }
   _oldObjections = [];  // TODO: This should probably go somewhere else
@@ -43,38 +43,38 @@ export class ListActions {
   storeObjections(objections): void {
     this._oldObjections = objections;
     this.ngRedux.dispatch({
-      type: ListActions.OBJECTIONS_STORED,
+      type: ListActions.STORE_OBJECTIONS,
       payload: {objections: objections}
     });
   }
 
   addObjection(): void {
     this.ngRedux.dispatch({
-      type: ListActions.OBJECTION_ADDED
+      type: ListActions.ADD_OBJECTION
     });
   }
 
   reorderObjections(): void {
     this.ngRedux.dispatch({
-      type: ListActions.OBJECTIONS_REORDERED
+      type: ListActions.REORDER_OBJECTIONS
     });
   }
 
   expandAll() {
     this.ngRedux.dispatch({
-      type: ListActions.ALL_EXPANDED
+      type: ListActions.EXPAND_ALL
     });
   }
 
   collapseAll() {
     this.ngRedux.dispatch({
-      type: ListActions.ALL_COLLAPSED
+      type: ListActions.COLLAPSE_ALL
     });
   }
 
   toggleEditable() {
     this.ngRedux.dispatch({
-      type: ListActions.EDITABLE_TOGGLED
+      type: ListActions.TOGGLE_EDITABLE
     });
   }
 
@@ -89,7 +89,7 @@ export class ListActions {
   // compare the changes with whatever was served to the page not just the original ones.
   saveAll() {
       this.ngRedux.dispatch({
-        type: ListActions.ALL_SAVED,
+        type: ListActions.SAVE_ALL,
         payload: {
           oldObjections: this._oldObjections,
           newObjections: this.ngRedux.getState().list.objections}
@@ -100,7 +100,7 @@ export class ListActions {
 
   addRebuttal({objection}) {
     this.ngRedux.dispatch({
-      type: ListActions.REBUTTAL_ADDED,
+      type: ListActions.ADD_REBUTTAL,
       payload: {
         objection: objection
       }
@@ -109,7 +109,7 @@ export class ListActions {
 
   starObjection({objection}) {
     this.ngRedux.dispatch({
-      type: ListActions.OBJECTION_STARRED,
+      type: ListActions.STAR_OBJECTION,
       payload: { objection: objection }
     });
   }
@@ -124,7 +124,7 @@ export class ListActions {
 
   reorderRebuttals({objection}) {
     this.ngRedux.dispatch({
-      type: ListActions.REBUTTALS_REORDERED,
+      type: ListActions.REORDER_REBUTTALS,
       payload: { objection: objection }
     });
   }
@@ -132,7 +132,7 @@ export class ListActions {
   expandObjection(objection): void {
     this.ngRedux.dispatch(
       { 
-       type: ListActions.OBJECTION_EXPANDED,
+       type: ListActions.EXPAND_OBJECTION,
        payload: { objection: objection }
       });
   }
@@ -140,7 +140,7 @@ export class ListActions {
   collapseObjection(objection): void {
     this.ngRedux.dispatch(
       { 
-       type: ListActions.OBJECTION_COLLAPSED,
+       type: ListActions.COLLAPSE_OBJECTION,
        payload: { objection: objection }
       });
   }
@@ -149,7 +149,7 @@ export class ListActions {
   
   cancelRebuttal({rebuttal, objection}) {
     this.ngRedux.dispatch({ 
-      type: ListActions.REBUTTAL_CANCELED,
+      type: ListActions.CANCEL_REBUTTAL,
        payload: { rebuttal: rebuttal,
                   objection: objection }
     });
@@ -157,7 +157,7 @@ export class ListActions {
 
   saveRebuttal({rebuttal, objection, newRebuttal}) {
     this.ngRedux.dispatch({ 
-      type: ListActions.REBUTTAL_SAVED,
+      type: ListActions.SAVE_REBUTTAL,
        payload: { rebuttal: rebuttal,
                   objection: objection,
                   newRebuttal: newRebuttal }
@@ -167,7 +167,7 @@ export class ListActions {
 
   makeRebuttalEditable({rebuttal, objection}) {
     this.ngRedux.dispatch({ 
-      type: ListActions.REBUTTAL_MADE_EDITABLE, 
+      type: ListActions.MAKE_REBUTTAL_EDITABLE, 
       payload: { rebuttal: rebuttal,
                  objection: objection }
     });
@@ -175,7 +175,7 @@ export class ListActions {
 
   error(err): void {
     this.ngRedux.dispatch({
-      type: ListActions.OBJECTIONS_FETCHED_ERROR,
+      type: ListActions.FETCH_OBJECTIONS_ERROR,
       error: err
     });
   }

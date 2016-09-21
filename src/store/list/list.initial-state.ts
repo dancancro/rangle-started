@@ -39,7 +39,7 @@ export const NewRebuttalFactory = makeTypedFactory<IRebuttal, IRebuttalRecord>({
 export const INITIAL_REBUTTAL_STATE = RebuttalFactory();
 
 export const ObjectionFactory = makeTypedFactory<IObjection, IObjectionRecord>({
-  rebuttals: List<IRebuttal>(INITIAL_REBUTTAL_STATE),
+  rebuttals: List<IRebuttal>(),
   id: null,
   name: 'New Objection',
   rebuttalsReordered: false,
@@ -52,7 +52,7 @@ export const ObjectionFactory = makeTypedFactory<IObjection, IObjectionRecord>({
 export const INITIAL_OBJECTION_STATE = ObjectionFactory();
 
 export const ListFactory = makeTypedFactory<IList, IListRecord>({
-  objections: List<IObjection>(INITIAL_OBJECTION_STATE),
+  objections: List<IObjection>(),
   editable: false, 
   expanded: false,
   scrollY: 0,
