@@ -39,11 +39,11 @@ Some more examples that I found helpful:
 |                                                                                |                |                    |               |
 | **User Experience**                                                            |                |                    |               |
 | Local storage (redux-localstorage)                                             |       Y        |          Y         |               |
-| Validation (Angular 2 Forms)                                                   |       Y        |          Y         |               |
+| [Validation](https://egghead.io/lessons/angular-2-create-and-submit-an-angular-2-form-using-ngform) (Angular 2 Forms)                                                   |       Y        |          Y         |               |
 | Authentication (rangle-starter + Passport)                                     |       Y        |          Y         |               |
 | Responsive styling (basscss)                                                   |       Y        |          Y         |               |
 | Editable lists                                                                 |       Y        |                    |               |
 | JPEG images                                                                    |       Y        |                    |               |       
-| Drag and drop (react-dnd?)                                                     |    coming      |                    |               |
+| [Drag and drop (react-dnd?)](https://github.com/JavascriptMick/ng2-state-talk)                                                     |    coming      |                    |               |
 | [Autocomplete (?)](https://egghead.io/lessons/angular-2-building-an-instant-search-with-angular-2-consuming-events-as-observables?course=build-an-angular-2-instant-search-component)                                                               |    coming      |                    |               |
 | Undo (redux-undo)                                                              |    coming      |                    |               |       

@@ -9,6 +9,9 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/observable/zip';
+import 'rxjs/add/observable/forkJoin';
+import 'rxjs/add/operator/switch';
+import 'rxjs/add/operator/do';
 
 import { ActionsObservable } from 'redux-observable';
 import { UPDATE_LOCATION } from 'ng2-redux-router'; 
@@ -72,7 +75,7 @@ export class ListEpics {
                   payload: { objectionId: objectionId }
                 });
               }
-              return Observable.of(outActions);  // I don't think making it an Observable is necessary
+              return outActions;  // I don't think making it an Observable is necessary
             }
           )
           .catch(error => {
@@ -80,7 +83,11 @@ export class ListEpics {
             return Observable.of({
               type: ListActions.FETCH_OBJECTIONS_ERROR
             });
-          });
+          })
+      .do(value => {
+        debugger;
+      })
+          .switch(); // this is saying "what ever is emitted (in this case, the array of actions) switch to that value as stream itself
         }
       );
   }

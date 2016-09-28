@@ -46,7 +46,8 @@ export class BernieApp {
     private listEpics: ListEpics) {
 
     const enh = (__DEV__ && devTools.isEnabled()) ?
-      [ ... enhancers, devTools.enhancer({
+//      [ ... enhancers, devTools.enhancer({  // disabling local storage
+      [ devTools.enhancer({
         deserializeState: reimmutify,
       }) ] :
       enhancers;
